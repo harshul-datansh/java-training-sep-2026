@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java FP Live Demo</title>
+<!-- GENERATED FILE: edit tools/present-template.html and the .md files, then run: java tools/GeneratePresent.java -->
+<link id="hljs-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/github.min.css">
+<link id="hljs-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/github-dark.min.css" disabled>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f5f6f8;
+    --bg-code: #f3f4f6;
+    --fg: #1d2330;
+    --fg-muted: #5b6475;
+    --border: #d9dde5;
+    --accent: #1f6feb;
+    --accent-soft: #e5efff;
+    --warn: #b42318;
+    --font-size: 20px;
+    --sidebar-w: 300px;
+  }
+  :root[data-theme="dark"] {
+    --bg: #111418;
+    --bg-soft: #181c22;
+    --bg-code: #1c2129;
+    --fg: #e6e9ef;
+    --fg-muted: #9aa3b2;
+    --border: #2d333d;
+    --accent: #6ea8ff;
+    --accent-soft: #1b2a44;
+    --warn: #ff8a80;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    font-size: var(--font-size);
+    line-height: 1.55;
+    display: flex;
+  }
+  #sidebar {
+    width: var(--sidebar-w);
+    flex: 0 0 var(--sidebar-w);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    background: var(--bg-soft);
+    border-right: 1px solid var(--border);
+    padding: 20px 14px;
+    font-size: 17px;
+  }
+  #sidebar h1 { font-size: 19px; margin: 0 0 4px 6px; }
+  #sidebar .sub { color: var(--fg-muted); font-size: 14px; margin: 0 0 16px 6px; }
+  #nav { list-style: none; margin: 0; padding: 0; }
+  #nav button {
+    display: block; width: 100%; text-align: left;
+    background: none; border: 1px solid transparent; border-radius: 8px;
+    color: var(--fg); font: inherit; padding: 10px 12px; margin-bottom: 4px; cursor: pointer;
+  }
+  #nav button:hover { background: var(--accent-soft); }
+  #nav button[aria-current="true"] { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+  #nav .path { display: block; color: var(--fg-muted); font-size: 13px; font-weight: 400; }
+  #controls { display: flex; gap: 6px; margin: 18px 6px 8px; flex-wrap: wrap; }
+  #controls button {
+    font: inherit; font-size: 15px; padding: 6px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--fg); cursor: pointer;
+  }
+  #controls button:hover { border-color: var(--accent); }
+  #status { margin: 10px 6px; font-size: 13px; color: var(--fg-muted); }
+  #status.bad { color: var(--warn); font-weight: 600; }
+  #hint { margin: 6px; font-size: 13px; color: var(--fg-muted); }
+  main { flex: 1; min-width: 0; height: 100vh; overflow-y: auto; }
+  .doc { max-width: 1150px; margin: 0 auto; padding: 32px 48px 120px; }
+  .doc h1 { font-size: 2em; border-bottom: 2px solid var(--border); padding-bottom: .25em; }
+  .doc h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: .2em; margin-top: 1.8em; }
+  .doc h3 { font-size: 1.2em; margin-top: 1.4em; }
+  .doc a { color: var(--accent); }
+  .doc blockquote { margin: 1em 0; padding: .5em 1em; border-left: 5px solid var(--accent); background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+  .doc blockquote p { margin: .3em 0; }
+  /* Ligatures off: interns must see "->" and "::" exactly as they type them, not as arrow glyphs. */
+  .doc code, .doc pre { font-family: "Cascadia Mono", Consolas, "JetBrains Mono", Menlo, monospace; font-size: .9em;
+    font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .doc :not(pre) > code { background: var(--bg-code); padding: .1em .35em; border-radius: 5px; }
+  .doc pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; overflow-x: auto; line-height: 1.45; }
+  .doc pre code.hljs { background: transparent; padding: 0; }
+  .doc table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; max-width: 100%; }
+  .doc th, .doc td { border: 1px solid var(--border); padding: 8px 12px; vertical-align: top; }
+  .doc th { background: var(--bg-soft); text-align: left; }
+  .doc hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+  .doc li { margin: .25em 0; }
+  .doc input[type="checkbox"] { transform: scale(1.3); margin-right: .5em; }
+  .mermaid-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 1.2em 0; overflow-x: auto; text-align: center; }
+  .mermaid-wrap svg { max-width: 100%; height: auto; }
+  .mermaid-wrap { cursor: zoom-in; }
+  .mermaid-wrap.zoomed { cursor: zoom-out; text-align: left; }
+  .mermaid-wrap.zoomed svg { max-width: none !important; width: auto; }
+  .diagram-tip { font-size: 13px; color: var(--fg-muted); margin: -0.8em 0 1.2em; text-align: right; }
+  .mermaid-wrap pre.mermaid { background: none; border: 0; margin: 0; }
+  .mermaid-error { color: var(--warn); font-weight: 600; text-align: left; white-space: pre-wrap; font-size: 15px; }
+  @media (max-width: 800px) {
+    body { display: block; }
+    #sidebar { position: static; width: auto; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { height: auto; }
+    .doc { padding: 20px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+<nav id="sidebar" aria-label="Documents">
+  <h1>Java FP Live Demo</h1>
+  <p class="sub">Lambdas / Functional Interfaces / Streams</p>
+  <ul id="nav"></ul>
+  <div id="controls">
+    <button id="font-down" title="Smaller text (-)">A-</button>
+    <button id="font-up" title="Larger text (+)">A+</button>
+    <button id="theme" title="Toggle dark mode (D)">Dark</button>
+  </div>
+  <div id="status">Loading...</div>
+  <div id="hint">Keys: Left / Right switch document, + / - font size, D dark mode</div>
+</nav>
+<main id="main"></main>
+
+<script>
+  // Embedded Markdown documents (generated by tools/GeneratePresent.java).
+  window.DOCS = [
+  {"path": "README.md", "title": "Java FP Live Demo: Lambdas, Functional Interfaces, Streams", "markdown": "# Java FP Live Demo: Lambdas, Functional Interfaces, Streams\n\nA live-coding project for an intern session. One running story (an **order-processing backend**) takes you through three topics, in this order:\n\n1. [Lambda Expressions](docs/01-lambdas.md)\n2. [Functional Interfaces](docs/02-functional-interfaces.md)\n3. [Stream API](docs/03-streams.md)\n\nPresenter? Start with [PRESENTER_GUIDE.md](PRESENTER_GUIDE.md), then open `present.html` in a browser for screen sharing.\n\n---\n\n## Prerequisites\n\n| Tool | Version | Check with |\n|---|---|---|\n| JDK | 17 or newer (the project compiles with `release 17`) | `java -version` |\n| Maven | 3.9.x (tested with 3.9.6) | `mvn -v` |\n| IDE (optional) | IntelliJ IDEA, Eclipse or VS Code with Java support | |\n\nThe only dependency is JUnit Jupiter 5.10.2 (test scope).\n\n---\n\n## Project layout\n\n```text\njava-fp-live-demo/\n  pom.xml\n  README.md                 \u003c- you are here\n  PRESENTER_GUIDE.md        \u003c- the live script for the trainer\n  present.html              \u003c- screen-share viewer for all the Markdown (generated)\n  docs/\n    01-lambdas.md\n    02-functional-interfaces.md\n    03-streams.md\n  broken-examples/          \u003c- code that does NOT compile, on purpose (see below)\n  tools/\n    GeneratePresent.java    \u003c- regenerates present.html from the .md files\n  src/main/java/com/training/demo/\n    model/                  \u003c- Order, OrderStatus, OrderDto, SampleData (shared by everything)\n    lambdas/     demo/ exercises/ solutions/\n    functional/  demo/ exercises/ solutions/   (+ DiscountRule.java)\n    streams/     demo/ exercises/ solutions/\n  src/test/java/com/training/demo/\n    lambdas/exercises/  functional/exercises/  streams/exercises/   \u003c- one test class per exercise\n```\n\nEvery `demo` class has a `main` method and prints labelled output. Demos are numbered in the order they are shown.\n\n---\n\n## Run a demo\n\n### From the IDE\n\nOpen the folder (or `pom.xml`) as a Maven project, open any `DemoNN_...` class and click the green run arrow next to `main`.\n\n### From the terminal (PowerShell, cmd or bash, run in the project folder)\n\n```text\nmvn -q compile\njava -cp target/classes com.training.demo.lambdas.demo.Demo01_AnonymousClassVsLambda\n```\n\n`mvn -q compile` prints nothing when it succeeds. Compile once, then run as many demos as you like. Re-run `mvn -q compile` after you edit code.\n\nAll demos, in presentation order:\n\n```text\njava -cp target/classes com.training.demo.lambdas.demo.Demo01_AnonymousClassVsLambda\njava -cp target/classes com.training.demo.lambdas.demo.Demo02_LambdaSyntax\njava -cp target/classes com.training.demo.lambdas.demo.Demo03_EffectivelyFinal\njava -cp target/classes com.training.demo.lambdas.demo.Demo04_LoopVariableTrap\njava -cp target/classes com.training.demo.lambdas.demo.Demo05_MethodReferences\njava -cp target/classes com.training.demo.lambdas.demo.Demo06_CommonMistakes\n\njava -cp target/classes com.training.demo.functional.demo.Demo01_WhatMakesItFunctional\njava -cp target/classes com.training.demo.functional.demo.Demo02_CoreFunctionalTypes\njava -cp target/classes com.training.demo.functional.demo.Demo03_CustomFunctionalInterface\njava -cp target/classes com.training.demo.functional.demo.Demo04_ComposingFunctions\n\njava -cp target/classes com.training.demo.streams.demo.Demo01_WhatIsAStream\njava -cp target/classes com.training.demo.streams.demo.Demo02_StreamSources\njava -cp target/classes com.training.demo.streams.demo.Demo03_IntermediateAndTerminal\njava -cp target/classes com.training.demo.streams.demo.Demo04_Laziness\njava -cp target/classes com.training.demo.streams.demo.Demo05_Collectors\njava -cp target/classes com.training.demo.streams.demo.Demo06_EndToEndDto\n```\n\n---\n\n## Exercises and tests\n\nEach topic has 4 exercises, easy to hard. Each exercise is a class in an `exercises` package with stub methods that throw `UnsupportedOperationException(\"TODO\")`, a docstring, and a hint. Each has its own JUnit 5 test class.\n\n**Run the tests for one exercise:**\n\n```text\nmvn test -Dtest=Ex01_SortByTotalTest\n```\n\n| Topic | Exercise class | Test class |\n|---|---|---|\n| Lambdas | `Ex01_SortByTotal` | `Ex01_SortByTotalTest` |\n| Lambdas | `Ex02_CaptureThreshold` | `Ex02_CaptureThresholdTest` |\n| Lambdas | `Ex03_MethodReferences` | `Ex03_MethodReferencesTest` |\n| Lambdas | `Ex04_DelayedLabels` | `Ex04_DelayedLabelsTest` |\n| Functional interfaces | `Ex01_CoreTypes` | `Ex01_CoreTypesTest` |\n| Functional interfaces | `Ex02_CustomDiscountRules` | `Ex02_CustomDiscountRulesTest` |\n| Functional interfaces | `Ex03_CombinePredicates` | `Ex03_CombinePredicatesTest` |\n| Functional interfaces | `Ex04_PricePipeline` | `Ex04_PricePipelineTest` |\n| Streams | `Ex01_FilterAndMap` | `Ex01_FilterAndMapTest` |\n| Streams | `Ex02_FlatMapAndReduce` | `Ex02_FlatMapAndReduceTest` |\n| Streams | `Ex03_Collectors` | `Ex03_CollectorsTest` |\n| Streams | `Ex04_TopCustomers` | `Ex04_TopCustomersTest` |\n\n**What to expect:**\n\n- Before an exercise is solved, its tests **fail** (red) with `UnsupportedOperation TODO`. That is by design: the room watches red turn green.\n- `mvn test` (all exercises) therefore reports `Tests run: 37, Failures: 0, Errors: 37` and `BUILD FAILURE` on a fresh copy. Every error is a TODO stub.\n- With all exercises solved, `mvn test` reports `Tests run: 37, Failures: 0, Errors: 0` and `BUILD SUCCESS`.\n- Worked solutions (with a short \"why\" comment) are in the `solutions` package next to each `exercises` package. The class names are the same, so you can copy a solution body straight into the exercise.\n\n---\n\n## Broken examples (compiler errors on purpose)\n\n`broken-examples/` holds tiny files that **do not compile**, so you can show the real compiler message live. They are outside `src/`, so Maven never sees them. Run from the project folder:\n\n```text\njavac --release 17 -d target/broken broken-examples/01-captured-variable-changed/*.java\njavac --release 17 -d target/broken broken-examples/02-loop-variable/*.java\njavac --release 17 -d target/broken broken-examples/03-annotated-two-abstract-methods/*.java\njavac --release 17 -d target/broken broken-examples/04-not-annotated-two-abstract-methods/*.java\njavac --release 17 -d target/broken broken-examples/05-annotated-no-abstract-method/*.java\n```\n\nThe expected messages are quoted in [docs/01-lambdas.md](docs/01-lambdas.md) and [docs/02-functional-interfaces.md](docs/02-functional-interfaces.md).\n\n---\n\n## The presentation viewer: `present.html`\n\n`present.html` shows this README, the presenter guide and all docs with a sidebar, big fonts, a light/dark switch, syntax-highlighted Java and rendered Mermaid diagrams. Double-click it to open it in a browser. It needs internet access, because it loads `marked`, `mermaid` and `highlight.js` from `cdn.jsdelivr.net`.\n\nBrowsers do not let a page opened from `file://` read other local files, so the Markdown is **embedded** into `present.html`. After you edit any `.md` file, regenerate it (from the project folder):\n\n```text\njava tools/GeneratePresent.java\n```\n\nThis uses Java's single-file source launcher (JDK 11+), so there is nothing to compile first. It prints the files it embedded.\n\nKeyboard shortcuts in the viewer: `Left` / `Right` arrows switch documents, `+` / `-` change the font size, `D` toggles dark mode.\n"},
+  {"path": "PRESENTER_GUIDE.md", "title": "Presenter Guide", "markdown": "# Presenter Guide\n\nThe live script for the session. Three topics, in order, one story: **our shop's order-processing backend**. Every demo and exercise uses the same 7 orders from `SampleData.orders()`.\n\nSuggested total: about **2 h 50 min** including two breaks. The timings below are a plan, not a rule; cut exercises 3-4 of a topic if you run late.\n\n| Block | Time | Minutes |\n|---|---|---|\n| Intro + the Order record | 0:00 | 10 |\n| Topic 1: Lambdas | 0:10 | 45 |\n| Break | 0:55 | 10 |\n| Topic 2: Functional Interfaces | 1:05 | 40 |\n| Break | 1:45 | 10 |\n| Topic 3: Streams | 1:55 | 50 |\n| Wrap-up and questions | 2:45 | 5 to 10 |\n\n---\n\n## Before the session (checklist)\n\n- [ ] `mvn -q compile` runs with no output (dependencies are downloaded, code compiles).\n- [ ] `mvn test -Dtest=Ex01_SortByTotalTest` runs and shows **red** (expected: the exercise is not solved yet).\n- [ ] `present.html` is open in the browser and the diagrams show (needs internet for the CDN scripts).\n- [ ] IDE font size is large (at least 18 pt). Terminal font large too.\n- [ ] Close notifications. Have `solutions/` ready but not open.\n- [ ] Optional: make a copy of the project, so you can reset the exercises after the session.\n\n**Screen layout that works well:** IDE on the left two thirds, terminal at the bottom, `present.html` in a separate window you switch to for diagrams and tables.\n\n---\n\n## How to run a live exercise (same routine every time)\n\n1. Open the exercise class. Read the docstring and the hint **out loud**.\n2. Run its test: `mvn test -Dtest=\u003cClassName\u003eTest`. Show the red result and the `UnsupportedOperation TODO` message.\n3. Ask the room: \"What goes in? What comes out? Which lambda shape is that?\"\n4. Type the answer the room suggests, even if it is wrong. Run the test. A wrong answer with a clear failure message is a great teaching moment.\n5. Green? Open the matching class in `solutions/` and read the \"why\" comment together.\n\n---\n\n## Intro (10 min)\n\n**Open:** `src/main/java/com/training/demo/model/Order.java`, then `SampleData.java`.\n\n**Say:**\n\n- \"Today we are the backend team of a small shop. Everything revolves around this `Order` record.\"\n- \"A record gives us a constructor, getters like `total()` and `id()`, `equals`, `hashCode` and `toString`, for free.\"\n- \"Today is about **passing behaviour around**: 'sort like this', 'keep only these', 'turn each order into that'.\"\n\n---\n\n## Topic 1: Lambda Expressions (45 min)\n\nDoc to show: `docs/01-lambdas.md`\n\n### Why it exists\n\nTo pass a small piece of behaviour (like \"compare by total\") you used to need a whole anonymous class. A lambda is just the interesting part: parameters, arrow, body.\n\n**Before**\n\n```java\nComparator\u003cOrder\u003e byTotal = new Comparator\u003cOrder\u003e() {\n    @Override\n    public int compare(Order a, Order b) {\n        return Double.compare(a.total(), b.total());\n    }\n};\n```\n\n**After**\n\n```java\nComparator\u003cOrder\u003e byTotal = (a, b) -\u003e Double.compare(a.total(), b.total());\n```\n\n### Steps\n\n| # | Min | Open | Run | Talking points |\n|---|---|---|---|---|\n| 1 | 7 | `lambdas/demo/Demo01_AnonymousClassVsLambda` | `Demo01_AnonymousClassVsLambda` | Count the lines of ceremony vs the one line of logic. The compiler knows the method (`compare`), the types (`Order`), the return type (`int`) from the target type. Same output both times. |\n| 2 | 7 | `Demo02_LambdaSyntax` + diagram \"Anatomy\" in the doc | `Demo02_LambdaSyntax` | Parameters, arrow, body. Shorthands: one parameter means no parentheses, one expression means no braces and no `return`. Zero parameters need `()`. |\n| 3 | 7 | `Demo03_EffectivelyFinal` + the sequence diagram | `Demo03_EffectivelyFinal` | The lambda is **used after** `totalAbove` returned, and on **another thread**. Java copies the value. Then **uncomment** the `count++` lines and show the compile error live. Re-comment. |\n| 4 | 5 | `Demo04_LoopVariableTrap` | `Demo04_LoopVariableTrap` | One `i` for the whole loop, changed by `i++`. Fix: copy into a local, or use for-each. Optional: `javac --release 17 -d target/broken broken-examples/02-loop-variable/*.java` |\n| 5 | 7 | `Demo05_MethodReferences` + the \"which kind\" diagram | `Demo05_MethodReferences` | 4 kinds. Spend the time on bound vs unbound: `vipEmail::equals` (object fixed now) vs `Order::customerEmail` (object arrives as first parameter). |\n| 6 | 3 | `Demo06_CommonMistakes` | `Demo06_CommonMistakes` | Same answers, but only one version can be named, tested and read. |\n| 7 | 10 | `lambdas/exercises/Ex01` to `Ex04` | `mvn test -Dtest=Ex01_SortByTotalTest` etc. | Do Ex01 and Ex02 together for sure. Ex04 is the loop trap for real: let the room hit the compile error first. |\n\n### Misconceptions interns have\n\n- **\"A lambda is a new kind of object/function type.\"** It is an instance of an interface; the lambda body becomes that interface's one method.\n- **\"Effectively final means the object cannot change.\"** Only the *variable* cannot be reassigned. `List\u003cString\u003e names = new ArrayList\u003c\u003e(); r = () -\u003e names.add(\"x\");` compiles. (It is still a bad idea: see Streams.)\n- **\"Lambdas are always faster/better.\"** They are shorter. For long logic, a named method is clearer.\n- **\"`this` inside a lambda is the lambda.\"** It is the surrounding object, unlike an anonymous class.\n- **\"`Order::customerEmail` calls the method now.\"** It does not call anything; it creates a function to call later.\n\n---\n\n## Topic 2: Functional Interfaces (40 min)\n\nDoc to show: `docs/02-functional-interfaces.md`\n\n### Why it exists\n\nA lambda needs a **type** so the compiler knows which method it implements. Java reused interfaces for that: any interface with exactly one abstract method can hold a lambda. `java.util.function` provides the common shapes, so you rarely write your own.\n\n**Before**: invent an interface for every kind of behaviour\n\n```java\ninterface OrderFilter { boolean matches(Order o); }\ninterface OrderToText { String convert(Order o); }\n```\n\n**After**: use the standard shapes, and get helper methods for free\n\n```java\nPredicate\u003cOrder\u003e isPaid = o -\u003e o.status() == OrderStatus.PAID;\nFunction\u003cOrder, String\u003e toEmail = Order::customerEmail;\nPredicate\u003cOrder\u003e paidAndPremium = isPaid.and(Order::premium);\n```\n\n### Steps\n\n| # | Min | Open | Run | Talking points |\n|---|---|---|---|---|\n| 1 | 6 | `functional/demo/Demo01_WhatMakesItFunctional` | `Demo01_WhatMakesItFunctional` | 4 methods declared, only `check` counts. Default, static and `Object` methods do not. |\n| 2 | 6 | `broken-examples/03-*`, `04-*`, `05-*` | the three `javac` commands from the README | With the annotation the error is **in the interface**. Without it the error appears **where the lambda is used**, maybe in someone else's code. The annotation is optional; it is a safety check. |\n| 3 | 7 | `Demo02_CoreFunctionalTypes` + the table and class diagram in the doc | `Demo02_CoreFunctionalTypes` | Pick by shape: what goes in, what comes out. Ask the room for each: \"which one is `Order -\u003e boolean`?\" (The Supplier line prints a random id; that is expected.) |\n| 4 | 5 | `functional/DiscountRule.java` + `Demo03_CustomFunctionalInterface` | `Demo03_CustomFunctionalInterface` | When a domain name beats `Function\u003cOrder, Double\u003e`. `plus` is a default method, `none` is static. `checkout(order, rule)`: behaviour as a parameter. |\n| 5 | 6 | `Demo04_ComposingFunctions` + the andThen/compose diagram | `Demo04_ComposingFunctions` | Each step prints. `andThen` = left to right. `compose` = the argument first. 187.5 vs 200.0 shows why order matters. `Function.identity()` as a \"no change\" step. |\n| 6 | 10 | `functional/exercises/Ex01` to `Ex04` | `mvn test -Dtest=Ex01_CoreTypesTest` etc. | Ex03: \"no new lambdas, only `and`/`or`/`negate`/`not`\". Ex04: the test fails with 200.0 if the order is wrong. |\n\n### Misconceptions interns have\n\n- **\"`@FunctionalInterface` makes an interface functional.\"** One abstract method makes it functional; the annotation only checks.\n- **\"Default methods break the one-method rule.\"** They do not count; they have a body.\n- **\"`f.compose(g)` runs f first.\"** It runs **g** first. Read it as \"f of g\".\n- **\"I need my own interface for every lambda.\"** Check `java.util.function` first.\n- **\"`Predicate.not` and `negate` are different.\"** Same result; `Predicate.not(...)` (Java 11+) is handy with method references: `filter(Predicate.not(String::isBlank))`.\n\n---\n\n## Topic 3: Stream API (50 min)\n\nDoc to show: `docs/03-streams.md`\n\n### Why it exists\n\nMost backend code is \"take a collection, keep some, transform them, summarise them\". Loops say *how*; streams say *what*, using the lambdas and functional interfaces from topics 1 and 2.\n\n**Before**\n\n```java\nList\u003cString\u003e ids = new ArrayList\u003c\u003e();\nfor (Order o : orders) {\n    if (o.isPaid()) {\n        ids.add(o.id());\n    }\n}\n```\n\n**After**\n\n```java\nList\u003cString\u003e ids = orders.stream()\n        .filter(Order::isPaid)\n        .map(Order::id)\n        .toList();\n```\n\n### Steps\n\n| # | Min | Open | Run | Talking points |\n|---|---|---|---|---|\n| 1 | 5 | `streams/demo/Demo01_WhatIsAStream` | `Demo01_WhatIsAStream` | Not a data structure; the list still has 7 orders. Single use: show the real `IllegalStateException` message. |\n| 2 | 5 | `Demo02_StreamSources` | `Demo02_StreamSources` | Collection, `Stream.of`, `Arrays.stream`, `IntStream.range` (end exclusive), `Files.lines` in try-with-resources, `Stream.iterate` + `limit`. |\n| 3 | 7 | `Demo03_IntermediateAndTerminal` + the pipeline diagram and table | `Demo03_IntermediateAndTerminal` | Intermediate returns a Stream (chainable, lazy). Terminal returns a result and starts the work. `flatMap`: a list of lists becomes one list. |\n| 4 | 8 | `Demo04_Laziness` + the sequence diagram | `Demo04_Laziness` | Part 1: nothing printed. Part 2: filter/map **interleave**, one element at a time. Part 3: `limit(2)` stops after A-102. Let the room predict each output before you run it. |\n| 5 | 7 | `Demo05_Collectors` | `Demo05_Collectors` | `toList`, `toMap` (and the real \"Duplicate key\" crash, then the merge fix), `groupingBy` + `counting`, `joining`. |\n| 6 | 6 | `Demo06_EndToEndDto` + the last diagram | `Demo06_EndToEndDto` | Loop version vs pipeline, same result (`true`). The pipeline reads like the requirement. Mapping lives in a named `toDto` method. |\n| 7 | 12 | `streams/exercises/Ex01` to `Ex04` | `mvn test -Dtest=Ex01_FilterAndMapTest` etc. | Ex02: why is `0.0` the right start value for `reduce`? Ex04 is a stretch goal; show the solution if time is short. |\n\n### Misconceptions interns have\n\n- **\"A stream is like a List.\"** It holds nothing and can be used once.\n- **\"`filter` removes elements from my list.\"** The source is never changed.\n- **\"Streams process step by step: all filtering, then all mapping.\"** Elements go through the whole pipeline one at a time (Demo04 proves it).\n- **\"`peek`/`map` with a `println` will always print.\"** Only when a terminal operation runs.\n- **\"`forEach` + `list.add` is how you collect.\"** Use `collect`/`toList`. Side effects in lambdas break with parallel streams.\n- **\"Streams are always faster than loops.\"** Not automatically. Choose them for readability; measure before claiming speed.\n\n---\n\n## Wrap-up (5 to 10 min)\n\n- A **lambda** is the body of one method, written as a value.\n- A **functional interface** is the type that gives a lambda its meaning (one abstract method).\n- A **stream** is a lazy pipeline that takes lambdas as its steps.\n- Homework: finish the remaining exercises; run `mvn test` until it says `Tests run: 37, Failures: 0, Errors: 0`.\n"},
+  {"path": "docs/01-lambdas.md", "title": "1. Lambda Expressions", "markdown": "# 1. Lambda Expressions\n\n\u003e **In one sentence:** a lambda is a short way to write *\"the body of one method\"* as a value, so you can pass behaviour around like you pass data.\n\nDemo code: `src/main/java/com/training/demo/lambdas/demo/`\nExercises: `src/main/java/com/training/demo/lambdas/exercises/` (tests in `src/test/java/...`)\n\n---\n\n## 1.1 Why lambdas exist: before and after\n\nOur order service must sort orders by total. `List.sort(...)` needs a `Comparator`: an object with one method, `compare(a, b)`.\n\n**Before (Java 7 style): anonymous inner class**\n\n```java\nComparator\u003cOrder\u003e byTotal = new Comparator\u003cOrder\u003e() {\n    @Override\n    public int compare(Order a, Order b) {\n        return Double.compare(a.total(), b.total());\n    }\n};\norders.sort(byTotal);\n```\n\nSix lines, and only one of them (`Double.compare(...)`) is the real logic. The rest is ceremony.\n\n**After (Java 8+): lambda**\n\n```java\nComparator\u003cOrder\u003e byTotal = (a, b) -\u003e Double.compare(a.total(), b.total());\norders.sort(byTotal);\n```\n\nThe compiler already knows the target type is `Comparator\u003cOrder\u003e`, so it can work out:\n\n- which method we are writing (`compare`, the only abstract one)\n- the parameter types (`a` and `b` are `Order`)\n- the return type (`int`)\n\nRun: `Demo01_AnonymousClassVsLambda`\n\n---\n\n## 1.2 Anatomy of a lambda\n\n```mermaid\nflowchart TB\n    T[\"Target type\u003cbr/\u003eComparator of Order\"]\n    T --\u003e|\"tells the compiler the method,\u003cbr/\u003ethe parameter types and the return type\"| L\n    subgraph L[\"The lambda\"]\n        direction LR\n        P[\"Parameters\u003cbr/\u003e(a, b)\"] --\u003e A[\"Arrow\u003cbr/\u003e-\u003e\"] --\u003e B[\"Body\u003cbr/\u003eDouble.compare(\u003cbr/\u003ea.total(), b.total())\"]\n    end\n```\n\n| Form | Example | When |\n|---|---|---|\n| Full | `(Order o) -\u003e { return o.total() \u003e 100; }` | Always legal |\n| Inferred types | `(o) -\u003e { return o.total() \u003e 100; }` | Compiler knows the type from the target |\n| One parameter, no parentheses | `o -\u003e { return o.total() \u003e 100; }` | Exactly one parameter, no type written |\n| One expression, no braces | `o -\u003e o.total() \u003e 100` | Body is a single expression: no braces, no `return`, no `;` |\n| No parameters | `() -\u003e \"Welcome\"` | Empty `()` is required |\n| Two or more parameters | `(total, shipping) -\u003e total + shipping` | Parentheses are required |\n| Block body | `o -\u003e { String k = ...; return k; }` | More than one statement: braces and `return` required |\n\nRun: `Demo02_LambdaSyntax`\n\n---\n\n## 1.3 Capturing variables: \"effectively final\"\n\nA lambda can use local variables of the method around it:\n\n```java\nstatic Predicate\u003cOrder\u003e totalAbove(double threshold) {\n    return o -\u003e o.total() \u003e threshold;   // uses threshold\n}\n```\n\nThe rule: the variable must be **final or effectively final**, meaning it is never changed after it gets its value. (Test: if you could add the word `final` and it still compiles, it is effectively final.)\n\n**Why does Java insist on this?**\n\n1. A lambda can run **later**: `totalAbove(200)` returns, its local variable `threshold` is gone, but the predicate is still used afterwards.\n2. A lambda can run **on another thread**.\n3. So Java **copies the value** into the lambda object when the lambda is created.\n4. If you were allowed to change the original variable afterwards, the copy inside the lambda and the original would **silently disagree**. Java prevents this bug by refusing to compile.\n\n```mermaid\nsequenceDiagram\n    participant M as totalAbove(200)\n    participant L as Lambda object\n    participant C as Caller\n    M-\u003e\u003eL: create lambda, COPY threshold = 200\n    M--\u003e\u003eC: return the lambda\n    Note over M: method is finished, its local variables are gone\n    C-\u003e\u003eL: test(order A-102)\n    L--\u003e\u003eC: true, because 560 is above its own copy (200)\n```\n\nWhat you get if you break the rule (real output of `javac --release 17`, file `broken-examples/01-captured-variable-changed/Counter.java`):\n\n```java\nint count = 0;\ncount++;\nreturn () -\u003e count;\n```\n\n```text\nCounter.java:6: error: local variables referenced from a lambda expression must be final or effectively final\n        return () -\u003e count;\n                     ^\n1 error\n```\n\nRun: `Demo03_EffectivelyFinal`\n\n---\n\n## 1.4 The loop-variable trap\n\n```java\nfor (int i = 0; i \u003c orders.size(); i++) {\n    jobs.add(() -\u003e System.out.println(i));   // does NOT compile\n}\n```\n\nThere is only **one** variable `i`, and `i++` changes it every round. The jobs run after the loop, when `i` is already `3`. Real `javac` output (`broken-examples/02-loop-variable/Loop.java`):\n\n```text\nLoop.java:6: error: local variables referenced from a lambda expression must be final or effectively final\n            tasks.add(() -\u003e System.out.println(i));\n                                               ^\n1 error\n```\n\n**Fix 1:** copy into a new local variable inside the loop body. It is a fresh variable every round, and never changes.\n\n```java\nfor (int i = 0; i \u003c orders.size(); i++) {\n    int position = i;\n    jobs.add(() -\u003e System.out.println(\"job \" + position));\n}\n```\n\n**Fix 2:** use the enhanced for loop. Its variable is fresh in every round.\n\n```java\nfor (Order order : orders) {\n    jobs.add(() -\u003e System.out.println(order.id()));\n}\n```\n\nRun: `Demo04_LoopVariableTrap`\n\n---\n\n## 1.5 Method references\n\nIf a lambda does nothing except call one existing method, you can replace it with a **method reference** (`::`).\n\n```mermaid\nflowchart LR\n    Q{\"Your lambda only\u003cbr/\u003ecalls ONE method.\u003cbr/\u003eWhich one?\"}\n    Q --\u003e|\"a static method\"| S[\"Kind 1 - Static\u003cbr/\u003eInteger::parseInt\u003cbr/\u003esame as s -\u003e Integer.parseInt(s)\"]\n    Q --\u003e|\"a method of an object\u003cbr/\u003eyou already have\"| B[\"Kind 2 - Bound, particular object\u003cbr/\u003evipEmail::equals\u003cbr/\u003esame as e -\u003e vipEmail.equals(e)\"]\n    Q --\u003e|\"a method of the\u003cbr/\u003efirst parameter\"| U[\"Kind 3 - Unbound, arbitrary object\u003cbr/\u003eOrder::customerEmail\u003cbr/\u003esame as o -\u003e o.customerEmail()\"]\n    Q --\u003e|\"a constructor\"| C[\"Kind 4 - Constructor\u003cbr/\u003eArrayList::new\u003cbr/\u003esame as () -\u003e new ArrayList()\"]\n```\n\n| Kind | Syntax | Example | Equivalent lambda |\n|---|---|---|---|\n| Static | `ClassName::staticMethod` | `Integer::parseInt` | `s -\u003e Integer.parseInt(s)` |\n| Bound (particular object) | `object::method` | `System.out::println` | `x -\u003e System.out.println(x)` |\n| Unbound (arbitrary object of a type) | `ClassName::instanceMethod` | `Order::customerEmail` | `o -\u003e o.customerEmail()` |\n| Constructor | `ClassName::new` | `ArrayList::new` | `() -\u003e new ArrayList\u003c\u003e()` |\n\n**Bound vs unbound** is the part interns mix up:\n\n- **Bound:** the object is fixed *when you create the reference*. `vipEmail::equals` always compares against that one `vipEmail`.\n- **Unbound:** the object arrives *as the first argument* each time. `Order::customerEmail` works on whichever order it is given. `String::startsWith` as a `BiFunction\u003cString, String, Boolean\u003e` means `(s, prefix) -\u003e s.startsWith(prefix)`.\n\nRun: `Demo05_MethodReferences`\n\n---\n\n## 1.6 Common Mistakes\n\n**1. Changing a captured variable.** Counting with `count++` inside `forEach` does not compile. Let the library do the work instead: `orders.stream().filter(Order::isPaid).count()` (topic 3).\n\n**2. Forgetting the loop variable is not effectively final.** Copy it into a local inside the loop, or use for-each.\n\n**3. Fat lambdas.** A lambda with 10 lines of business rules has no name, cannot be unit tested on its own, and shows up as a generated name like `lambda$main$0` in stack traces.\n\n```java\n// BAD\nPredicate\u003cOrder\u003e freeShipping = o -\u003e {\n    if (o.status() == OrderStatus.CANCELLED) return false;\n    if (o.skus().isEmpty()) return false;\n    if (o.premium()) return true;\n    return o.total() \u003e= 50;\n};\n\n// GOOD: a named, documented, testable method + a method reference\nPredicate\u003cOrder\u003e freeShipping = Demo06_CommonMistakes::qualifiesForFreeShipping;\n```\n\nRule of thumb: if the lambda body needs braces and more than two or three lines, extract a method.\n\n**4. Thinking `this` inside a lambda means the lambda.** Inside an anonymous class `this` is the anonymous object. Inside a lambda `this` is the object of the *surrounding* class. A lambda does not create a new scope for `this`.\n\nRun: `Demo06_CommonMistakes`\n\n---\n\n## 1.7 Exercises (do them together)\n\n| # | Class | Level | Idea |\n|---|---|---|---|\n| 1 | `Ex01_SortByTotal` | easy | first lambda: a `Comparator` |\n| 2 | `Ex02_CaptureThreshold` | easy/medium | lambdas that capture parameters |\n| 3 | `Ex03_MethodReferences` | medium | one method reference of each kind |\n| 4 | `Ex04_DelayedLabels` | hard | the loop-variable trap in a real task |\n\nRun one: `mvn test -Dtest=Ex01_SortByTotalTest`\n\nNext: [2. Functional Interfaces](02-functional-interfaces.md)\n"},
+  {"path": "docs/02-functional-interfaces.md", "title": "2. Functional Interfaces", "markdown": "# 2. Functional Interfaces\n\n\u003e **In one sentence:** a functional interface is an interface with exactly **one abstract method**; it is the *type* of a lambda.\n\nDemo code: `src/main/java/com/training/demo/functional/demo/`\nOur own interface: `src/main/java/com/training/demo/functional/DiscountRule.java`\nBroken examples for live compiling: `broken-examples/03-*`, `04-*`, `05-*`\n\n---\n\n## 2.1 Why they exist\n\nA lambda on its own has no type. `o -\u003e o.total() \u003e 100` could be many things. Java needs a **target type** to know:\n\n- which method the lambda implements\n- what the parameter types are\n- what it must return\n\nInstead of adding a brand-new \"function type\" to the language, Java 8 reused something everyone already knew: **interfaces**. Any interface with exactly one abstract method can be the target of a lambda. `Comparator`, `Runnable` and `Callable` existed long before Java 8 and they all work with lambdas.\n\n**Before:** every time you wanted to pass behaviour you wrote an interface *and* an (anonymous) class.\n**After:** you use a ready-made interface from `java.util.function` and write a lambda.\n\n---\n\n## 2.2 What counts as \"one abstract method\"\n\n| Method in the interface | Counts toward the one? | Why |\n|---|---|---|\n| `boolean check(Order o);` | **Yes** | abstract, no body |\n| `default String describe(Order o) { ... }` | No | has a body |\n| `static OrderCheck alwaysOk() { ... }` | No | belongs to the interface, not to objects |\n| `String toString();` / `boolean equals(Object o);` | No | every object already has these from `Object` |\n\n```java\n@FunctionalInterface\ninterface OrderCheck {\n    boolean check(Order order);                       // THE abstract method\n    default String describe(Order order) { ... }      // does not count\n    static OrderCheck alwaysOk() { return o -\u003e true; } // does not count\n    @Override String toString();                      // does not count\n}\n\nOrderCheck notCancelled = order -\u003e order.status() != OrderStatus.CANCELLED;\n```\n\nRun: `Demo01_WhatMakesItFunctional`\n\n---\n\n## 2.3 `@FunctionalInterface`: what happens when you break the rule\n\nThe annotation is **optional**. It does not change how the interface works; it asks the compiler to *check* the rule and fail early. All messages below are real `javac --release 17` output from the files in `broken-examples/`.\n\n**Two abstract methods, WITH the annotation** (`broken-examples/03-annotated-two-abstract-methods/OrderRule.java`):\n\n```java\n@FunctionalInterface\npublic interface OrderRule {\n    boolean test(String orderId);\n    String describe();\n}\n```\n\n```text\nOrderRule.java:1: error: Unexpected @FunctionalInterface annotation\n@FunctionalInterface\n^\n  OrderRule is not a functional interface\n    multiple non-overriding abstract methods found in interface OrderRule\n1 error\n```\n\nThe error points at the **interface**, the moment someone adds the second method.\n\n**Two abstract methods, WITHOUT the annotation** (`broken-examples/04-not-annotated-two-abstract-methods/`): `OrderRule.java` on its own compiles fine. The error only appears where someone tries to use a lambda:\n\n```java\nOrderRule rule = id -\u003e id.startsWith(\"A\");\n```\n\n```text\nUseRule.java:2: error: incompatible types: OrderRule is not a functional interface\n    OrderRule rule = id -\u003e id.startsWith(\"A\");\n                     ^\n    multiple non-overriding abstract methods found in interface OrderRule\n1 error\n```\n\nSo without the annotation, the mistake shows up somewhere else, possibly in another team's code.\n\n**Zero abstract methods, WITH the annotation** (`broken-examples/05-annotated-no-abstract-method/Empty.java`):\n\n```text\nEmpty.java:1: error: Unexpected @FunctionalInterface annotation\n@FunctionalInterface\n^\n  Empty is not a functional interface\n    no abstract method found in interface Empty\n1 error\n```\n\nCompile any of them live from the project root, for example:\n\n```text\njavac --release 17 -d target/broken broken-examples/03-annotated-two-abstract-methods/*.java\n```\n\n---\n\n## 2.4 The core types in `java.util.function`\n\nPick by the **shape**: what goes in, what comes out.\n\n| Interface | Shape | Method | Reach for it when... |\n|---|---|---|---|\n| `Function\u003cT, R\u003e` | `T -\u003e R` | `apply` | you convert one thing into another (Order to email) |\n| `BiFunction\u003cT, U, R\u003e` | `(T, U) -\u003e R` | `apply` | you need two inputs to compute a result (order + tax rate to price) |\n| `Supplier\u003cT\u003e` | `() -\u003e T` | `get` | you produce a value on demand (new id, default value, lazy creation) |\n| `Consumer\u003cT\u003e` | `T -\u003e void` | `accept` | you do something with a value and return nothing (log, save, print) |\n| `BiConsumer\u003cT, U\u003e` | `(T, U) -\u003e void` | `accept` | the same with two inputs (order + message to send a mail) |\n| `Predicate\u003cT\u003e` | `T -\u003e boolean` | `test` | you ask a yes/no question (is it paid?) |\n| `BiPredicate\u003cT, U\u003e` | `(T, U) -\u003e boolean` | `test` | a yes/no question about two values (does order contain SKU?) |\n| `UnaryOperator\u003cT\u003e` | `T -\u003e T` | `apply` | input and output are the same type (normalise a String) |\n| `BinaryOperator\u003cT\u003e` | `(T, T) -\u003e T` | `apply` | you combine two of the same into one (sum, max) |\n\nThere are also primitive versions such as `IntPredicate` and `ToDoubleFunction\u003cT\u003e` that avoid boxing `int` to `Integer`.\n\n```mermaid\nclassDiagram\n    direction LR\n    class Function~T,R~ {\n        \u003c\u003cinterface\u003e\u003e\n        +apply(T t) R\n        +andThen(Function after) Function\n        +compose(Function before) Function\n        +identity()$ Function\n    }\n    class UnaryOperator~T~ {\n        \u003c\u003cinterface\u003e\u003e\n    }\n    class BiFunction~T,U,R~ {\n        \u003c\u003cinterface\u003e\u003e\n        +apply(T t, U u) R\n        +andThen(Function after) BiFunction\n    }\n    class BinaryOperator~T~ {\n        \u003c\u003cinterface\u003e\u003e\n        +minBy(Comparator c)$ BinaryOperator\n        +maxBy(Comparator c)$ BinaryOperator\n    }\n    class Predicate~T~ {\n        \u003c\u003cinterface\u003e\u003e\n        +test(T t) boolean\n        +and(Predicate other) Predicate\n        +or(Predicate other) Predicate\n        +negate() Predicate\n        +not(Predicate target)$ Predicate\n    }\n    class Supplier~T~ {\n        \u003c\u003cinterface\u003e\u003e\n        +get() T\n    }\n    class Consumer~T~ {\n        \u003c\u003cinterface\u003e\u003e\n        +accept(T t) void\n        +andThen(Consumer after) Consumer\n    }\n    class DiscountRule {\n        \u003c\u003cinterface\u003e\u003e\n        +discountFor(Order order) double\n        +plus(DiscountRule other) DiscountRule\n        +none()$ DiscountRule\n    }\n    Function \u003c|-- UnaryOperator\n    BiFunction \u003c|-- BinaryOperator\n    note for Function \"One abstract method: apply. andThen and compose are default methods\"\n    note for DiscountRule \"Our own functional interface in com.training.demo.functional\"\n```\n\n(Underlined methods are `static`. Every other non-abstract method is a `default` method.)\n\nRun: `Demo02_CoreFunctionalTypes`\n\n---\n\n## 2.5 Writing your own functional interface\n\nUse the built-in types first. Write your own when a **domain name** makes the code clearer or you want domain helper methods.\n\n```java\n@FunctionalInterface\npublic interface DiscountRule {\n    double discountFor(Order order);                  // the one abstract method\n\n    default DiscountRule plus(DiscountRule other) {   // combine rules\n        return order -\u003e this.discountFor(order) + other.discountFor(order);\n    }\n\n    static DiscountRule none() {                      // a \"no discount\" rule\n        return order -\u003e 0.0;\n    }\n}\n\nDiscountRule premiumTenPercent = order -\u003e order.premium() ? order.total() * 0.10 : 0.0;\nDiscountRule bigOrderFlat20   = order -\u003e order.total() \u003e= 500 ? 20.0 : 0.0;\nDiscountRule blackFriday      = premiumTenPercent.plus(bigOrderFlat20);\n```\n\n`DiscountRule` vs `Function\u003cOrder, Double\u003e`: the name says what it is for, `discountFor(...)` reads well, it returns a primitive `double` (no boxing), and it can carry `plus` and `none`.\n\nRun: `Demo03_CustomFunctionalInterface` (A-102: 56.00 + 20.00 = 76.00 discount)\n\n---\n\n## 2.6 Default and static helper methods: composing behaviour\n\n| Method | On | Meaning |\n|---|---|---|\n| `f.andThen(g)` | `Function` | run `f`, then feed its result into `g` |\n| `f.compose(g)` | `Function` | run `g` first, then `f`. Read it as \"f of g\" |\n| `Function.identity()` | `Function` (static) | returns its input unchanged |\n| `p.and(q)` | `Predicate` | both must be true (stops early if `p` is false) |\n| `p.or(q)` | `Predicate` | at least one must be true (stops early if `p` is true) |\n| `p.negate()` | `Predicate` | flips true and false |\n| `Predicate.not(p)` | `Predicate` (static, Java 11+) | same as `p.negate()`, reads well inside `filter(...)` |\n\n**Order matters.** A 50 EUR coupon and 25% VAT on a 200 EUR order:\n\n```java\nFunction\u003cDouble, Double\u003e applyCoupon = price -\u003e price - 50;\nFunction\u003cDouble, Double\u003e addVat      = price -\u003e price * 1.25;\n\napplyCoupon.andThen(addVat).apply(200.0);   // 187.5  coupon first\naddVat.compose(applyCoupon).apply(200.0);   // 187.5  coupon first (the argument runs first)\napplyCoupon.compose(addVat).apply(200.0);   // 200.0  VAT first\n```\n\n```mermaid\nflowchart TB\n    subgraph S1[\"applyCoupon.andThen(addVat)\"]\n        direction LR\n        A0[\"200.0\"] --\u003e A1[\"applyCoupon\u003cbr/\u003e200 - 50 = 150\"] --\u003e A2[\"addVat\u003cbr/\u003e150 x 1.25 = 187.5\"]\n    end\n    subgraph S2[\"addVat.compose(applyCoupon)\"]\n        direction LR\n        B0[\"200.0\"] --\u003e B1[\"applyCoupon\u003cbr/\u003eruns FIRST: 150\"] --\u003e B2[\"addVat\u003cbr/\u003e187.5\"]\n    end\n    subgraph S3[\"applyCoupon.compose(addVat)\"]\n        direction LR\n        C0[\"200.0\"] --\u003e C1[\"addVat\u003cbr/\u003eruns FIRST: 250\"] --\u003e C2[\"applyCoupon\u003cbr/\u003e200.0\"]\n    end\n    S1 ~~~ S2\n    S2 ~~~ S3\n```\n\nPredicates combine the same way:\n\n```java\nPredicate\u003cOrder\u003e isPaid    = o -\u003e o.status() == OrderStatus.PAID;\nPredicate\u003cOrder\u003e isPremium = Order::premium;\n\nisPaid.and(isPremium)      // [A-100, A-105]\nisPaid.or(isPremium)       // [A-100, A-102, A-103, A-105]\nisPremium.negate()         // [A-101, A-103, A-104, A-106]\nPredicate.not(isCancelled) // every order except A-104\n```\n\nRun: `Demo04_ComposingFunctions` (each step prints, so you can see the execution order)\n\n---\n\n## 2.7 Common Mistakes\n\n**1. Adding a second abstract method to an interface that is used with lambdas.** Every lambda for it stops compiling. Put `@FunctionalInterface` on interfaces meant for lambdas, so the error appears in the interface itself.\n\n**2. Thinking `@FunctionalInterface` is required.** It is not. Any interface with exactly one abstract method works with lambdas, with or without the annotation. The annotation is only a safety check.\n\n**3. Mixing up `andThen` and `compose`.** `f.andThen(g)` = f first. `f.compose(g)` = g first. When in doubt use `andThen`: it reads left to right.\n\n**4. Writing your own interface when a built-in one fits.** `interface OrderFilter { boolean matches(Order o); }` is just `Predicate\u003cOrder\u003e`, and you lose `and`, `or`, `negate`.\n\n**5. Boxing in hot loops.** `Function\u003cInteger, Integer\u003e` boxes every value. For large numeric work prefer `IntUnaryOperator`, `ToDoubleFunction\u003cT\u003e` and friends.\n\n---\n\n## 2.8 Exercises (do them together)\n\n| # | Class | Level | Idea |\n|---|---|---|---|\n| 1 | `Ex01_CoreTypes` | easy | a lambda for `Predicate`, `Function`, `BiPredicate`, `BinaryOperator` |\n| 2 | `Ex02_CustomDiscountRules` | medium | implement and combine `DiscountRule` |\n| 3 | `Ex03_CombinePredicates` | medium | `and`, `or`, `negate`, `Predicate.not` |\n| 4 | `Ex04_PricePipeline` | hard | `andThen`, `compose`, `Function.identity()` in the right order |\n\nRun one: `mvn test -Dtest=Ex03_CombinePredicatesTest`\n\nPrevious: [1. Lambdas](01-lambdas.md) | Next: [3. Streams](03-streams.md)\n"},
+  {"path": "docs/03-streams.md", "title": "3. Stream API", "markdown": "# 3. Stream API\n\n\u003e **In one sentence:** a stream is a pipeline that data flows through: you describe *what* you want (filter, transform, collect) and the library does the looping.\n\nDemo code: `src/main/java/com/training/demo/streams/demo/`\n\n---\n\n## 3.1 Why streams exist: before and after\n\n\"How many orders are paid?\"\n\n**Before: say HOW, step by step**\n\n```java\nint paid = 0;\nfor (Order o : orders) {\n    if (o.isPaid()) {\n        paid++;\n    }\n}\n```\n\n**After: say WHAT**\n\n```java\nlong paid = orders.stream()\n        .filter(Order::isPaid)\n        .count();\n```\n\nStreams are where lambdas and functional interfaces pay off: `filter` takes a `Predicate`, `map` takes a `Function`, `forEach` takes a `Consumer`, `reduce` takes a `BinaryOperator`.\n\n---\n\n## 3.2 What a stream is, and what it is NOT\n\n| A stream IS | A stream is NOT |\n|---|---|\n| a pipeline of operations over some elements | a data structure: it stores nothing |\n| lazy: work happens only when a result is asked for | a way to modify the source: `filter` does not remove from the List |\n| single use: consumed by its terminal operation | reusable: calling a second terminal op throws |\n\n```java\nStream\u003cOrder\u003e premium = orders.stream().filter(Order::premium);\npremium.count();   // 3\npremium.count();   // IllegalStateException\n```\n\nReal output of `Demo01_WhatIsAStream`:\n\n```text\n  second use: IllegalStateException -\u003e stream has already been operated upon or closed\n```\n\n**Fix:** ask the source for a new stream each time: `orders.stream()...`.\n\nRun: `Demo01_WhatIsAStream`\n\n---\n\n## 3.3 Where streams come from\n\n| Source | Example | Note |\n|---|---|---|\n| Any collection | `orders.stream()` | the most common one |\n| A few values | `Stream.of(\"NEW\", \"PAID\", \"SHIPPED\")` | |\n| An array | `Arrays.stream(dailyRevenue)` | `double[]` gives a `DoubleStream` (has `sum()`) |\n| A range of numbers | `IntStream.range(1, 4)` | 1, 2, 3 (end is exclusive) |\n| Lines of a file | `Files.lines(path)` | keeps the file open: **always** use try-with-resources |\n| Generated values | `Stream.iterate(200, n -\u003e n + 1).limit(3)` | infinite without `limit` |\n\n```java\ntry (Stream\u003cString\u003e lines = Files.lines(csv)) {\n    List\u003cString\u003e ids = lines.map(line -\u003e line.split(\";\")[0]).toList();\n}   // file is closed here, even if an exception was thrown\n```\n\nRun: `Demo02_StreamSources`\n\n---\n\n## 3.4 The pipeline: source -\u003e intermediate -\u003e terminal\n\n```mermaid\nflowchart TB\n    SRC[\"SOURCE\u003cbr/\u003eorders.stream()\"] --\u003e LAZY\n    subgraph LAZY[\"INTERMEDIATE (lazy)\"]\n        direction TB\n        I1[\"filter(o -\u003e o.total() \u003e 100)\"] --\u003e I2[\"map(Order::id)\"]\n        I2 --\u003e I3[\"limit(2)\"]\n    end\n    LAZY --\u003e T[\"TERMINAL\u003cbr/\u003etoList()\u003cbr/\u003estarts the work and pulls elements through\"]\n    T --\u003e R[\"RESULT\u003cbr/\u003e[A-100, A-102]\"]\n```\n\n- **Source:** where elements come from. Exactly one.\n- **Intermediate operations:** each returns a new `Stream`, so you can chain them. Zero or more. They are **lazy**.\n- **Terminal operation:** produces the result (a value, a collection, or a side effect) and **starts** the work. Exactly one, at the end.\n\n| Intermediate (returns a Stream, lazy) | What it does | Terminal (produces a result, starts the work) | What it does |\n|---|---|---|---|\n| `filter(Predicate)` | keep matching elements | `collect(Collector)` / `toList()` | build a List, Map, String... |\n| `map(Function)` | turn each element into something else | `reduce(identity, BinaryOperator)` | combine all into one value |\n| `flatMap(Function)` | turn each element into a stream, flatten them | `forEach(Consumer)` | do something with each element |\n| `sorted()` / `sorted(Comparator)` | sort | `count()` | how many elements |\n| `distinct()` | drop duplicates (uses `equals`) | `anyMatch(Predicate)` | is at least one true? (short-circuits) |\n| `limit(n)` | keep the first n (short-circuits) | | |\n| `skip(n)` | drop the first n | | |\n\nReal output of `Demo03_IntermediateAndTerminal` (selected lines):\n\n```text\nflatMap  (order -\u003e its SKUs): [BOOK-1, PEN-2, PEN-2, LAPTOP-9, BAG-3, BOOK-1, BOOK-7, PEN-2, MUG-4, HEADSET-5, LAPTOP-9]\ndistinct (unique SKUs)      : [BOOK-1, PEN-2, LAPTOP-9, BAG-3, BOOK-7, MUG-4, HEADSET-5]\nsorted   (by total, desc)   : [A-106, A-102, A-105, A-100, A-103, A-101, A-104]\nreduce   (sum of totals)    : 2059.49\n```\n\nRun: `Demo03_IntermediateAndTerminal`\n\n---\n\n## 3.5 Laziness\n\nThree facts, all visible in `Demo04_Laziness` because every step prints:\n\n1. **Nothing runs without a terminal operation.** Building the pipeline only *describes* the work.\n2. **Elements flow one at a time** through the whole pipeline: `filter A-100`, `map A-100`, `filter A-101`, `filter A-102`, `map A-102`... It is *not* \"filter everything, then map everything\".\n3. **Short-circuiting:** `limit(2)` stops pulling as soon as it has two elements. The rest of the source is never read.\n\n```mermaid\nsequenceDiagram\n    participant S as Source (7 orders)\n    participant F as filter total over 100\n    participant M as map to id\n    participant L as limit(2)\n    participant T as toList\n    Note over S,T: Pipeline is built. Nothing has happened yet.\n    T-\u003e\u003eS: terminal op starts pulling\n    S-\u003e\u003eF: A-100 (120.0)\n    F-\u003e\u003eM: A-100 passes\n    M-\u003e\u003eL: A-100\n    L-\u003e\u003eT: A-100 (1 of 2)\n    S-\u003e\u003eF: A-101 (35.5)\n    F--\u003e\u003eS: rejected, pull the next one\n    S-\u003e\u003eF: A-102 (560.0)\n    F-\u003e\u003eM: A-102 passes\n    M-\u003e\u003eL: A-102\n    L-\u003e\u003eT: A-102 (2 of 2), stop pulling\n    Note over S: A-103 to A-106 are never read\n```\n\nReal output of part 3 of `Demo04_Laziness`:\n\n```text\n=== 3) limit(2) short-circuits: stops after 2 matches ===\n    filter A-100\n    filter A-101\n    filter A-102\n  result: [A-100, A-102]   (A-103 .. A-106 were never looked at)\n```\n\nRun: `Demo04_Laziness`\n\n---\n\n## 3.6 Collectors\n\n`collect(...)` turns a stream back into a normal Java object. The four you will use every week:\n\n**`toList`: \"the ids of the orders to ship\"**\n\n```java\nList\u003cString\u003e toShip = orders.stream()\n        .filter(Order::isPaid)\n        .map(Order::id)\n        .collect(Collectors.toList());     // Java 16+: .toList()\n// [A-100, A-103, A-105]\n```\n\n(`Stream.toList()` returns an unmodifiable list; `Collectors.toList()` makes no promise either way.)\n\n**`toMap`: \"look up a total by order id\"**\n\n```java\nMap\u003cString, Double\u003e totalById = orders.stream()\n        .collect(Collectors.toMap(Order::id, Order::total));\ntotalById.get(\"A-102\");   // 560.0\n```\n\nKeys must be unique. By email, bob has two orders, and `toMap` throws (real output):\n\n```text\nIllegalStateException -\u003e Duplicate key bob@shop.test (attempted merging values 35.5 and 89.99)\n```\n\nFix: pass a **merge function** that says what to do with two values for the same key:\n\n```java\nMap\u003cString, Double\u003e spendByCustomer = orders.stream()\n        .collect(Collectors.toMap(Order::customerEmail, Order::total, Double::sum));\n// {anna@shop.test=360.0, bob@shop.test=125.49, ...}\n```\n\n**`groupingBy`: \"orders per status\" for the ops dashboard**\n\n```java\nMap\u003cOrderStatus, Long\u003e countByStatus = orders.stream()\n        .collect(Collectors.groupingBy(Order::status, Collectors.counting()));\n// {NEW=2, PAID=3, SHIPPED=1, CANCELLED=1}\n```\n\nThe second argument (a *downstream collector*) says what to do inside each group: `counting()`, `summingDouble(...)`, `mapping(..., toList())`...\n\n**`joining`: \"the To: line for the premium newsletter\"**\n\n```java\nString toLine = orders.stream()\n        .filter(Order::premium)\n        .map(Order::customerEmail)\n        .distinct()\n        .collect(Collectors.joining(\", \", \"To: \", \";\"));\n// To: anna@shop.test, carla@shop.test;\n```\n\nRun: `Demo05_Collectors` (the demo uses `TreeMap::new` in a few places only so that the printed map has a stable order)\n\n---\n\n## 3.7 End to end: the \"orders overview\" endpoint\n\nRequirement: skip cancelled orders, convert each `Order` to an `OrderDto` (total with 25% VAT, item count), group by tier `PREMIUM` / `STANDARD`, most expensive first.\n\n**Before:**\n\n```java\nMap\u003cString, List\u003cOrderDto\u003e\u003e result = new TreeMap\u003c\u003e();\nfor (Order o : orders) {\n    if (o.status() == OrderStatus.CANCELLED) {\n        continue;\n    }\n    String tier = o.premium() ? \"PREMIUM\" : \"STANDARD\";\n    result.computeIfAbsent(tier, k -\u003e new ArrayList\u003c\u003e()).add(toDto(o));\n}\nfor (List\u003cOrderDto\u003e group : result.values()) {\n    group.sort(Comparator.comparingDouble(OrderDto::totalWithVat).reversed());\n}\n```\n\n**After:**\n\n```java\nMap\u003cString, List\u003cOrderDto\u003e\u003e result = orders.stream()\n        .filter(o -\u003e o.status() != OrderStatus.CANCELLED)\n        .sorted(Comparator.comparingDouble(Order::total).reversed())\n        .collect(Collectors.groupingBy(\n                o -\u003e o.premium() ? \"PREMIUM\" : \"STANDARD\",\n                TreeMap::new,\n                Collectors.mapping(Demo06_EndToEndDto::toDto, Collectors.toList())));\n```\n\n```mermaid\nflowchart TB\n    A[\"7 Orders\"] --\u003e|\"filter: not CANCELLED\"| B[\"6 Orders\"]\n    B --\u003e|\"sorted: total, highest first\"| C[\"6 Orders, sorted\"]\n    C --\u003e|\"groupingBy: tier\"| D{\"PREMIUM or STANDARD?\"}\n    D --\u003e|\"PREMIUM\"| E[\"mapping toDto\u003cbr/\u003eA-102, A-105, A-100\"]\n    D --\u003e|\"STANDARD\"| F[\"mapping toDto\u003cbr/\u003eA-106, A-103, A-101\"]\n```\n\nReal output of `Demo06_EndToEndDto`:\n\n```text\nPREMIUM\n  A-102  carla@shop.test    700.00  items=2\n  A-105  anna@shop.test     300.00  items=1\n  A-100  anna@shop.test     150.00  items=2\nSTANDARD\n  A-106  erik@shop.test    1248.75  items=1\n  A-103  bob@shop.test      112.49  items=3\n  A-101  bob@shop.test       44.38  items=1\n\nloop version gives the same result? true\n```\n\nNote that the mapping logic lives in a named method `toDto(...)`, not in a fat lambda.\n\n---\n\n## 3.8 Common Mistakes\n\n**1. Reusing a stream.** A second terminal operation throws `IllegalStateException: stream has already been operated upon or closed`. Create a new stream from the source.\n\n**2. Forgetting the terminal operation.** `orders.stream().filter(...).map(...);` does nothing at all.\n\n**3. Building a result with `forEach` and an outside list.**\n\n```java\n// BAD: side effect, not safe if the stream ever becomes parallel\nList\u003cString\u003e ids = new ArrayList\u003c\u003e();\norders.stream().filter(Order::isPaid).forEach(o -\u003e ids.add(o.id()));\n\n// GOOD\nList\u003cString\u003e ids = orders.stream().filter(Order::isPaid).map(Order::id).toList();\n```\n\n**4. `toMap` with duplicate keys.** Throws `IllegalStateException: Duplicate key ...`. Add a merge function, or use `groupingBy`.\n\n**5. Not closing `Files.lines`.** The stream holds the file open. Use try-with-resources.\n\n**6. An infinite stream without `limit`.** `Stream.iterate(1, n -\u003e n + 1).toList()` never finishes.\n\n**7. Expecting the source to change.** `orders.stream().sorted()` does not sort `orders`. It gives you a sorted *stream*.\n\n---\n\n## 3.9 Exercises (do them together)\n\n| # | Class | Level | Idea |\n|---|---|---|---|\n| 1 | `Ex01_FilterAndMap` | easy | `filter` + `map` + `toList` |\n| 2 | `Ex02_FlatMapAndReduce` | medium | `flatMap`, `distinct`, `sorted`, `reduce` |\n| 3 | `Ex03_Collectors` | medium | `groupingBy` + `counting`, `toMap` with merge, `joining` |\n| 4 | `Ex04_TopCustomers` | hard | end to end: group, sort map entries, `limit` |\n\nRun one: `mvn test -Dtest=Ex04_TopCustomersTest`\n\nPrevious: [2. Functional Interfaces](02-functional-interfaces.md) | Back to [README](../README.md)\n"}
+];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/java.min.js"></script>
+<script>
+(function () {
+  var docs = window.DOCS || [];
+  var main = document.getElementById('main');
+  var nav = document.getElementById('nav');
+  var statusEl = document.getElementById('status');
+  var sections = {};      // path -> section element
+  var rendered = {};      // path -> true once markdown has been rendered
+  var current = null;
+  var report = {};        // path -> {blocks, svgs, errors: []}
+  window.__diagramReport = report;
+
+  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) { } }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+  // ---------- theme ----------
+  function prefersDark() {
+    try { return window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; }
+  }
+  var theme = load('fp-theme') || (prefersDark() ? 'dark' : 'light');
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('theme').textContent = theme === 'dark' ? 'Light' : 'Dark';
+    document.getElementById('hljs-light').disabled = theme === 'dark';
+    document.getElementById('hljs-dark').disabled = theme !== 'dark';
+    if (window.mermaid) {
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: theme === 'dark' ? 'dark' : 'default',
+        themeVariables: { fontSize: '18px' },
+        flowchart: { htmlLabels: true },
+        sequence: { useMaxWidth: true }
+      });
+    }
+  }
+
+  // ---------- font size ----------
+  var fontSize = parseInt(load('fp-font') || '20', 10);
+  function applyFont() {
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+  }
+  function changeFont(delta) {
+    fontSize = Math.max(14, Math.min(34, fontSize + delta));
+    store('fp-font', String(fontSize));
+    applyFont();
+  }
+
+  // ---------- links between docs ----------
+  function dirOf(path) { var i = path.lastIndexOf('/'); return i < 0 ? '' : path.substring(0, i + 1); }
+  function resolve(base, href) {
+    var parts = (dirOf(base) + href).split('/');
+    var out = [];
+    parts.forEach(function (p) {
+      if (p === '..') { out.pop(); } else if (p !== '.' && p !== '') { out.push(p); }
+    });
+    return out.join('/');
+  }
+  function findDoc(path) {
+    for (var i = 0; i < docs.length; i++) { if (docs[i].path === path) { return docs[i]; } }
+    return null;
+  }
+
+  // ---------- rendering ----------
+  function renderMarkdown(doc, section) {
+    if (!window.marked) {
+      section.innerHTML = '<p class="mermaid-error">Could not load marked from cdn.jsdelivr.net (offline?). Showing raw Markdown.</p>';
+      var pre = document.createElement('pre');
+      pre.textContent = doc.markdown;
+      section.appendChild(pre);
+      return;
+    }
+    section.innerHTML = marked.parse(doc.markdown, { gfm: true });
+
+    // Mermaid blocks: turn ```mermaid code blocks into <pre class="mermaid">.
+    var blocks = section.querySelectorAll('pre > code.language-mermaid');
+    blocks.forEach(function (code) {
+      var wrap = document.createElement('div');
+      wrap.className = 'mermaid-wrap';
+      var target = document.createElement('pre');
+      target.className = 'mermaid';
+      target.textContent = code.textContent;
+      wrap.setAttribute('data-source', code.textContent);
+      wrap.appendChild(target);
+      wrap.title = 'Click to show the diagram at full size';
+      wrap.addEventListener('click', function () { wrap.classList.toggle('zoomed'); });
+      var tip = document.createElement('div');
+      tip.className = 'diagram-tip';
+      tip.textContent = 'click the diagram to zoom';
+      var pre = code.parentNode;
+      pre.parentNode.insertBefore(tip, pre.nextSibling);
+      pre.replaceWith(wrap);
+    });
+
+    // Syntax highlighting for the other code blocks.
+    if (window.hljs) {
+      section.querySelectorAll('pre > code').forEach(function (code) {
+        var cls = code.className || '';
+        if (cls.indexOf('language-') === -1) { code.classList.add('language-plaintext'); }
+        if (cls.indexOf('language-text') !== -1) { code.className = 'language-plaintext'; }
+        try { hljs.highlightElement(code); } catch (e) { }
+      });
+    }
+
+    // Links to other .md files open that document in the viewer.
+    section.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (/^[a-z]+:/i.test(href) || href.charAt(0) === '#') { return; }
+      var clean = href.split('#')[0];
+      if (!/\.md$/i.test(clean)) { return; }
+      var targetPath = resolve(doc.path, clean);
+      if (findDoc(targetPath)) {
+        a.addEventListener('click', function (ev) { ev.preventDefault(); show(targetPath); });
+      }
+    });
+  }
+
+  // Sequence diagrams use fixed marker ids such as "arrowhead". With several diagrams on one page
+  // (and some of them hidden), url(#arrowhead) can point at a marker inside a hidden SVG and the
+  // arrowheads disappear. Prefix every marker id that is not already unique with this diagram's id.
+  function uniqueMarkerIds(svg, prefix) {
+    var ids = [];
+    svg.replace(/<(?:marker|symbol)[^>]*?\sid="([^"]+)"/g, function (m, markerId) {
+      if (markerId.indexOf(prefix) !== 0) { ids.push(markerId); }
+      return m;
+    });
+    ids.forEach(function (markerId) {
+      var fresh = prefix + '-' + markerId;
+      svg = svg.split('id="' + markerId + '"').join('id="' + fresh + '"');
+      svg = svg.split('url(#' + markerId + ')').join('url(#' + fresh + ')');
+      svg = svg.split('href="#' + markerId + '"').join('href="#' + fresh + '"');
+    });
+    return svg;
+  }
+
+  async function renderDiagrams(path) {
+    var section = sections[path];
+    var wraps = Array.prototype.slice.call(section.querySelectorAll('.mermaid-wrap'));
+    var info = { blocks: wraps.length, svgs: 0, errors: [] };
+    report[path] = info;
+    if (!window.mermaid) {
+      if (wraps.length) { info.errors.push('mermaid did not load from the CDN'); }
+      updateStatus();
+      return;
+    }
+    for (var i = 0; i < wraps.length; i++) {
+      var wrap = wraps[i];
+      var src = wrap.getAttribute('data-source');
+      try {
+        await mermaid.parse(src);
+        var id = 'mmd-' + path.replace(/[^a-z0-9]/gi, '_') + '-' + i + '-' + Date.now();
+        var result = await mermaid.render(id, src);
+        wrap.innerHTML = uniqueMarkerIds(result.svg, id);
+        // Mermaid can "succeed" but still draw a warning inside a label (e.g. a label that starts
+        // with "1. " is read as a Markdown list). Count those as errors too.
+        var drawn = wrap.textContent || '';
+        if (/Unsupported markdown|Syntax error/i.test(drawn)) {
+          throw new Error('rendered with a warning inside the diagram: ' + (drawn.match(/Unsupported markdown[^A-Z]*|Syntax error[^.]*/i) || [''])[0]);
+        }
+        info.svgs++;
+      } catch (e) {
+        var msg = (e && (e.message || e.str)) ? (e.message || e.str) : String(e);
+        info.errors.push('Diagram ' + (i + 1) + ': ' + msg);
+        wrap.innerHTML = '';
+        var err = document.createElement('div');
+        err.className = 'mermaid-error';
+        err.textContent = 'Mermaid error in diagram ' + (i + 1) + ':\n' + msg;
+        wrap.appendChild(err);
+      }
+    }
+    updateStatus();
+  }
+
+  function updateStatus() {
+    var r = report[current];
+    if (!r) { statusEl.textContent = ''; return; }
+    if (r.errors.length) {
+      statusEl.className = 'bad';
+      statusEl.textContent = 'Diagrams: ' + r.svgs + ' of ' + r.blocks + ' rendered. ' + r.errors.join(' | ');
+    } else {
+      statusEl.className = '';
+      statusEl.textContent = r.blocks ? ('Diagrams: ' + r.svgs + ' of ' + r.blocks + ' rendered') : 'No diagrams in this document';
+    }
+  }
+
+  function show(path) {
+    var doc = findDoc(path) || docs[0];
+    if (!doc) { return; }
+    current = doc.path;
+    Object.keys(sections).forEach(function (p) { sections[p].hidden = (p !== current); });
+    nav.querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-current', b.getAttribute('data-path') === current ? 'true' : 'false');
+    });
+    var section = sections[current];
+    main.scrollTop = 0;
+    try { history.replaceState(null, '', '#' + encodeURIComponent(current)); } catch (e) { }
+    if (!rendered[current]) {
+      rendered[current] = true;
+      renderMarkdown(doc, section);
+      renderDiagrams(current);   // rendered while visible, so sizes are correct
+    } else {
+      updateStatus();
+    }
+  }
+
+  function rerenderAllDiagrams() {
+    // After a theme change: re-render the visible doc now, the others when they are next shown.
+    Object.keys(rendered).forEach(function (p) {
+      if (p !== current) { rendered[p] = false; sections[p].innerHTML = ''; }
+    });
+    if (current) {
+      var section = sections[current];
+      section.querySelectorAll('.mermaid-wrap').forEach(function (w) {
+        w.innerHTML = '';
+      });
+      renderDiagrams(current);
+    }
+  }
+
+  // ---------- build the page ----------
+  docs.forEach(function (doc, i) {
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.setAttribute('data-path', doc.path);
+    b.innerHTML = '';
+    b.appendChild(document.createTextNode(doc.title));
+    var small = document.createElement('span');
+    small.className = 'path';
+    small.textContent = doc.path;
+    b.appendChild(small);
+    b.addEventListener('click', function () { show(doc.path); });
+    li.appendChild(b);
+    nav.appendChild(li);
+
+    var section = document.createElement('article');
+    section.className = 'doc';
+    section.hidden = true;
+    main.appendChild(section);
+    sections[doc.path] = section;
+  });
+
+  document.getElementById('font-up').addEventListener('click', function () { changeFont(2); });
+  document.getElementById('font-down').addEventListener('click', function () { changeFont(-2); });
+  document.getElementById('theme').addEventListener('click', function () {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    store('fp-theme', theme);
+    applyTheme();
+    rerenderAllDiagrams();
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) { return; }
+    var idx = docs.findIndex(function (d) { return d.path === current; });
+    if (ev.key === 'ArrowRight' && idx < docs.length - 1) { show(docs[idx + 1].path); }
+    else if (ev.key === 'ArrowLeft' && idx > 0) { show(docs[idx - 1].path); }
+    else if (ev.key === '+' || ev.key === '=') { changeFont(2); }
+    else if (ev.key === '-') { changeFont(-2); }
+    else if (ev.key === 'd' || ev.key === 'D') { document.getElementById('theme').click(); }
+  });
+
+  applyFont();
+  applyTheme();
+  var start = '';
+  try { start = decodeURIComponent((location.hash || '').substring(1)); } catch (e) { }
+  show(findDoc(start) ? start : (docs[0] && docs[0].path));
+})();
+</script>
+</body>
+</html>

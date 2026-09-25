@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.training</groupId>
+    <artifactId>java-fp-training</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>Java Functional Programming Training</name>
+    <description>Lambdas, functional interfaces and the Stream API, from the ground up</description>
+
+    <!-- One Maven module per topic. Work through them in this order. -->
+    <modules>
+        <module>lambda-expressions</module>
+        <module>functional-interfaces</module>
+        <module>stream-api</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.10.2</junit.version>
+        <!-- Where the tests live. The "solutions" profile below points this elsewhere. -->
+        <fp.testSourceDirectory>src/test/java</fp.testSourceDirectory>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <testSourceDirectory>${fp.testSourceDirectory}</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!--
+            TRAINER ONLY: mvn clean test -Psolutions
+
+            Runs the exact same tests against the solutions package instead of the
+            exercises package, so you can prove every solution passes.
+
+            How: the tests import their target class from ...exercises. This profile
+            copies the tests to target/solution-tests, rewrites ".exercises." to
+            ".solutions." in the copy, and makes that copy the test source directory.
+            Always use "clean" when switching between normal and -Psolutions runs.
+        -->
+        <profile>
+            <id>solutions</id>
+            <properties>
+                <fp.testSourceDirectory>${project.build.directory}/solution-tests</fp.testSourceDirectory>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>point-tests-at-solutions</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <copy todir="${project.build.directory}/solution-tests" overwrite="true" encoding="UTF-8">
+                                            <fileset dir="${project.basedir}/src/test/java" erroronmissingdir="false"/>
+                                            <filterchain>
+                                                <tokenfilter>
+                                                    <replaceregex pattern="\.exercises\." replace=".solutions." flags="g"/>
+                                                </tokenfilter>
+                                            </filterchain>
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>

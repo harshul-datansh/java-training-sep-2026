@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java FP Live Demo</title>
+<!-- GENERATED FILE: edit tools/present-template.html and the .md files, then run: java tools/GeneratePresent.java -->
+<link id="hljs-light" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/github.min.css">
+<link id="hljs-dark" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/styles/github-dark.min.css" disabled>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f5f6f8;
+    --bg-code: #f3f4f6;
+    --fg: #1d2330;
+    --fg-muted: #5b6475;
+    --border: #d9dde5;
+    --accent: #1f6feb;
+    --accent-soft: #e5efff;
+    --warn: #b42318;
+    --font-size: 20px;
+    --sidebar-w: 300px;
+  }
+  :root[data-theme="dark"] {
+    --bg: #111418;
+    --bg-soft: #181c22;
+    --bg-code: #1c2129;
+    --fg: #e6e9ef;
+    --fg-muted: #9aa3b2;
+    --border: #2d333d;
+    --accent: #6ea8ff;
+    --accent-soft: #1b2a44;
+    --warn: #ff8a80;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+    font-size: var(--font-size);
+    line-height: 1.55;
+    display: flex;
+  }
+  #sidebar {
+    width: var(--sidebar-w);
+    flex: 0 0 var(--sidebar-w);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+    background: var(--bg-soft);
+    border-right: 1px solid var(--border);
+    padding: 20px 14px;
+    font-size: 17px;
+  }
+  #sidebar h1 { font-size: 19px; margin: 0 0 4px 6px; }
+  #sidebar .sub { color: var(--fg-muted); font-size: 14px; margin: 0 0 16px 6px; }
+  #nav { list-style: none; margin: 0; padding: 0; }
+  #nav button {
+    display: block; width: 100%; text-align: left;
+    background: none; border: 1px solid transparent; border-radius: 8px;
+    color: var(--fg); font: inherit; padding: 10px 12px; margin-bottom: 4px; cursor: pointer;
+  }
+  #nav button:hover { background: var(--accent-soft); }
+  #nav button[aria-current="true"] { background: var(--accent-soft); border-color: var(--accent); font-weight: 600; }
+  #nav .path { display: block; color: var(--fg-muted); font-size: 13px; font-weight: 400; }
+  #controls { display: flex; gap: 6px; margin: 18px 6px 8px; flex-wrap: wrap; }
+  #controls button {
+    font: inherit; font-size: 15px; padding: 6px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--bg); color: var(--fg); cursor: pointer;
+  }
+  #controls button:hover { border-color: var(--accent); }
+  #status { margin: 10px 6px; font-size: 13px; color: var(--fg-muted); }
+  #status.bad { color: var(--warn); font-weight: 600; }
+  #hint { margin: 6px; font-size: 13px; color: var(--fg-muted); }
+  main { flex: 1; min-width: 0; height: 100vh; overflow-y: auto; }
+  .doc { max-width: 1150px; margin: 0 auto; padding: 32px 48px 120px; }
+  .doc h1 { font-size: 2em; border-bottom: 2px solid var(--border); padding-bottom: .25em; }
+  .doc h2 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: .2em; margin-top: 1.8em; }
+  .doc h3 { font-size: 1.2em; margin-top: 1.4em; }
+  .doc a { color: var(--accent); }
+  .doc blockquote { margin: 1em 0; padding: .5em 1em; border-left: 5px solid var(--accent); background: var(--accent-soft); border-radius: 0 8px 8px 0; }
+  .doc blockquote p { margin: .3em 0; }
+  /* Ligatures off: interns must see "->" and "::" exactly as they type them, not as arrow glyphs. */
+  .doc code, .doc pre { font-family: "Cascadia Mono", Consolas, "JetBrains Mono", Menlo, monospace; font-size: .9em;
+    font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+  .doc :not(pre) > code { background: var(--bg-code); padding: .1em .35em; border-radius: 5px; }
+  .doc pre { background: var(--bg-code); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; overflow-x: auto; line-height: 1.45; }
+  .doc pre code.hljs { background: transparent; padding: 0; }
+  .doc table { border-collapse: collapse; margin: 1em 0; display: block; overflow-x: auto; max-width: 100%; }
+  .doc th, .doc td { border: 1px solid var(--border); padding: 8px 12px; vertical-align: top; }
+  .doc th { background: var(--bg-soft); text-align: left; }
+  .doc hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+  .doc li { margin: .25em 0; }
+  .doc input[type="checkbox"] { transform: scale(1.3); margin-right: .5em; }
+  .mermaid-wrap { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin: 1.2em 0; overflow-x: auto; text-align: center; }
+  .mermaid-wrap svg { max-width: 100%; height: auto; }
+  .mermaid-wrap { cursor: zoom-in; }
+  .mermaid-wrap.zoomed { cursor: zoom-out; text-align: left; }
+  .mermaid-wrap.zoomed svg { max-width: none !important; width: auto; }
+  .diagram-tip { font-size: 13px; color: var(--fg-muted); margin: -0.8em 0 1.2em; text-align: right; }
+  .mermaid-wrap pre.mermaid { background: none; border: 0; margin: 0; }
+  .mermaid-error { color: var(--warn); font-weight: 600; text-align: left; white-space: pre-wrap; font-size: 15px; }
+  @media (max-width: 800px) {
+    body { display: block; }
+    #sidebar { position: static; width: auto; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+    main { height: auto; }
+    .doc { padding: 20px 16px 80px; }
+  }
+</style>
+</head>
+<body>
+<nav id="sidebar" aria-label="Documents">
+  <h1>Java FP Live Demo</h1>
+  <p class="sub">Lambdas / Functional Interfaces / Streams</p>
+  <ul id="nav"></ul>
+  <div id="controls">
+    <button id="font-down" title="Smaller text (-)">A-</button>
+    <button id="font-up" title="Larger text (+)">A+</button>
+    <button id="theme" title="Toggle dark mode (D)">Dark</button>
+  </div>
+  <div id="status">Loading...</div>
+  <div id="hint">Keys: Left / Right switch document, + / - font size, D dark mode</div>
+</nav>
+<main id="main"></main>
+
+<script>
+  // Embedded Markdown documents (generated by tools/GeneratePresent.java).
+  window.DOCS = /*__DOCS__*/[];
+</script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets@11.9.0/languages/java.min.js"></script>
+<script>
+(function () {
+  var docs = window.DOCS || [];
+  var main = document.getElementById('main');
+  var nav = document.getElementById('nav');
+  var statusEl = document.getElementById('status');
+  var sections = {};      // path -> section element
+  var rendered = {};      // path -> true once markdown has been rendered
+  var current = null;
+  var report = {};        // path -> {blocks, svgs, errors: []}
+  window.__diagramReport = report;
+
+  function store(key, value) { try { localStorage.setItem(key, value); } catch (e) { } }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+  // ---------- theme ----------
+  function prefersDark() {
+    try { return window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) { return false; }
+  }
+  var theme = load('fp-theme') || (prefersDark() ? 'dark' : 'light');
+  function applyTheme() {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.getElementById('theme').textContent = theme === 'dark' ? 'Light' : 'Dark';
+    document.getElementById('hljs-light').disabled = theme === 'dark';
+    document.getElementById('hljs-dark').disabled = theme !== 'dark';
+    if (window.mermaid) {
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: theme === 'dark' ? 'dark' : 'default',
+        themeVariables: { fontSize: '18px' },
+        flowchart: { htmlLabels: true },
+        sequence: { useMaxWidth: true }
+      });
+    }
+  }
+
+  // ---------- font size ----------
+  var fontSize = parseInt(load('fp-font') || '20', 10);
+  function applyFont() {
+    document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+  }
+  function changeFont(delta) {
+    fontSize = Math.max(14, Math.min(34, fontSize + delta));
+    store('fp-font', String(fontSize));
+    applyFont();
+  }
+
+  // ---------- links between docs ----------
+  function dirOf(path) { var i = path.lastIndexOf('/'); return i < 0 ? '' : path.substring(0, i + 1); }
+  function resolve(base, href) {
+    var parts = (dirOf(base) + href).split('/');
+    var out = [];
+    parts.forEach(function (p) {
+      if (p === '..') { out.pop(); } else if (p !== '.' && p !== '') { out.push(p); }
+    });
+    return out.join('/');
+  }
+  function findDoc(path) {
+    for (var i = 0; i < docs.length; i++) { if (docs[i].path === path) { return docs[i]; } }
+    return null;
+  }
+
+  // ---------- rendering ----------
+  function renderMarkdown(doc, section) {
+    if (!window.marked) {
+      section.innerHTML = '<p class="mermaid-error">Could not load marked from cdn.jsdelivr.net (offline?). Showing raw Markdown.</p>';
+      var pre = document.createElement('pre');
+      pre.textContent = doc.markdown;
+      section.appendChild(pre);
+      return;
+    }
+    section.innerHTML = marked.parse(doc.markdown, { gfm: true });
+
+    // Mermaid blocks: turn ```mermaid code blocks into <pre class="mermaid">.
+    var blocks = section.querySelectorAll('pre > code.language-mermaid');
+    blocks.forEach(function (code) {
+      var wrap = document.createElement('div');
+      wrap.className = 'mermaid-wrap';
+      var target = document.createElement('pre');
+      target.className = 'mermaid';
+      target.textContent = code.textContent;
+      wrap.setAttribute('data-source', code.textContent);
+      wrap.appendChild(target);
+      wrap.title = 'Click to show the diagram at full size';
+      wrap.addEventListener('click', function () { wrap.classList.toggle('zoomed'); });
+      var tip = document.createElement('div');
+      tip.className = 'diagram-tip';
+      tip.textContent = 'click the diagram to zoom';
+      var pre = code.parentNode;
+      pre.parentNode.insertBefore(tip, pre.nextSibling);
+      pre.replaceWith(wrap);
+    });
+
+    // Syntax highlighting for the other code blocks.
+    if (window.hljs) {
+      section.querySelectorAll('pre > code').forEach(function (code) {
+        var cls = code.className || '';
+        if (cls.indexOf('language-') === -1) { code.classList.add('language-plaintext'); }
+        if (cls.indexOf('language-text') !== -1) { code.className = 'language-plaintext'; }
+        try { hljs.highlightElement(code); } catch (e) { }
+      });
+    }
+
+    // Links to other .md files open that document in the viewer.
+    section.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (/^[a-z]+:/i.test(href) || href.charAt(0) === '#') { return; }
+      var clean = href.split('#')[0];
+      if (!/\.md$/i.test(clean)) { return; }
+      var targetPath = resolve(doc.path, clean);
+      if (findDoc(targetPath)) {
+        a.addEventListener('click', function (ev) { ev.preventDefault(); show(targetPath); });
+      }
+    });
+  }
+
+  // Sequence diagrams use fixed marker ids such as "arrowhead". With several diagrams on one page
+  // (and some of them hidden), url(#arrowhead) can point at a marker inside a hidden SVG and the
+  // arrowheads disappear. Prefix every marker id that is not already unique with this diagram's id.
+  function uniqueMarkerIds(svg, prefix) {
+    var ids = [];
+    svg.replace(/<(?:marker|symbol)[^>]*?\sid="([^"]+)"/g, function (m, markerId) {
+      if (markerId.indexOf(prefix) !== 0) { ids.push(markerId); }
+      return m;
+    });
+    ids.forEach(function (markerId) {
+      var fresh = prefix + '-' + markerId;
+      svg = svg.split('id="' + markerId + '"').join('id="' + fresh + '"');
+      svg = svg.split('url(#' + markerId + ')').join('url(#' + fresh + ')');
+      svg = svg.split('href="#' + markerId + '"').join('href="#' + fresh + '"');
+    });
+    return svg;
+  }
+
+  async function renderDiagrams(path) {
+    var section = sections[path];
+    var wraps = Array.prototype.slice.call(section.querySelectorAll('.mermaid-wrap'));
+    var info = { blocks: wraps.length, svgs: 0, errors: [] };
+    report[path] = info;
+    if (!window.mermaid) {
+      if (wraps.length) { info.errors.push('mermaid did not load from the CDN'); }
+      updateStatus();
+      return;
+    }
+    for (var i = 0; i < wraps.length; i++) {
+      var wrap = wraps[i];
+      var src = wrap.getAttribute('data-source');
+      try {
+        await mermaid.parse(src);
+        var id = 'mmd-' + path.replace(/[^a-z0-9]/gi, '_') + '-' + i + '-' + Date.now();
+        var result = await mermaid.render(id, src);
+        wrap.innerHTML = uniqueMarkerIds(result.svg, id);
+        // Mermaid can "succeed" but still draw a warning inside a label (e.g. a label that starts
+        // with "1. " is read as a Markdown list). Count those as errors too.
+        var drawn = wrap.textContent || '';
+        if (/Unsupported markdown|Syntax error/i.test(drawn)) {
+          throw new Error('rendered with a warning inside the diagram: ' + (drawn.match(/Unsupported markdown[^A-Z]*|Syntax error[^.]*/i) || [''])[0]);
+        }
+        info.svgs++;
+      } catch (e) {
+        var msg = (e && (e.message || e.str)) ? (e.message || e.str) : String(e);
+        info.errors.push('Diagram ' + (i + 1) + ': ' + msg);
+        wrap.innerHTML = '';
+        var err = document.createElement('div');
+        err.className = 'mermaid-error';
+        err.textContent = 'Mermaid error in diagram ' + (i + 1) + ':\n' + msg;
+        wrap.appendChild(err);
+      }
+    }
+    updateStatus();
+  }
+
+  function updateStatus() {
+    var r = report[current];
+    if (!r) { statusEl.textContent = ''; return; }
+    if (r.errors.length) {
+      statusEl.className = 'bad';
+      statusEl.textContent = 'Diagrams: ' + r.svgs + ' of ' + r.blocks + ' rendered. ' + r.errors.join(' | ');
+    } else {
+      statusEl.className = '';
+      statusEl.textContent = r.blocks ? ('Diagrams: ' + r.svgs + ' of ' + r.blocks + ' rendered') : 'No diagrams in this document';
+    }
+  }
+
+  function show(path) {
+    var doc = findDoc(path) || docs[0];
+    if (!doc) { return; }
+    current = doc.path;
+    Object.keys(sections).forEach(function (p) { sections[p].hidden = (p !== current); });
+    nav.querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-current', b.getAttribute('data-path') === current ? 'true' : 'false');
+    });
+    var section = sections[current];
+    main.scrollTop = 0;
+    try { history.replaceState(null, '', '#' + encodeURIComponent(current)); } catch (e) { }
+    if (!rendered[current]) {
+      rendered[current] = true;
+      renderMarkdown(doc, section);
+      renderDiagrams(current);   // rendered while visible, so sizes are correct
+    } else {
+      updateStatus();
+    }
+  }
+
+  function rerenderAllDiagrams() {
+    // After a theme change: re-render the visible doc now, the others when they are next shown.
+    Object.keys(rendered).forEach(function (p) {
+      if (p !== current) { rendered[p] = false; sections[p].innerHTML = ''; }
+    });
+    if (current) {
+      var section = sections[current];
+      section.querySelectorAll('.mermaid-wrap').forEach(function (w) {
+        w.innerHTML = '';
+      });
+      renderDiagrams(current);
+    }
+  }
+
+  // ---------- build the page ----------
+  docs.forEach(function (doc, i) {
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.setAttribute('data-path', doc.path);
+    b.innerHTML = '';
+    b.appendChild(document.createTextNode(doc.title));
+    var small = document.createElement('span');
+    small.className = 'path';
+    small.textContent = doc.path;
+    b.appendChild(small);
+    b.addEventListener('click', function () { show(doc.path); });
+    li.appendChild(b);
+    nav.appendChild(li);
+
+    var section = document.createElement('article');
+    section.className = 'doc';
+    section.hidden = true;
+    main.appendChild(section);
+    sections[doc.path] = section;
+  });
+
+  document.getElementById('font-up').addEventListener('click', function () { changeFont(2); });
+  document.getElementById('font-down').addEventListener('click', function () { changeFont(-2); });
+  document.getElementById('theme').addEventListener('click', function () {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    store('fp-theme', theme);
+    applyTheme();
+    rerenderAllDiagrams();
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.ctrlKey || ev.metaKey || ev.altKey) { return; }
+    var idx = docs.findIndex(function (d) { return d.path === current; });
+    if (ev.key === 'ArrowRight' && idx < docs.length - 1) { show(docs[idx + 1].path); }
+    else if (ev.key === 'ArrowLeft' && idx > 0) { show(docs[idx - 1].path); }
+    else if (ev.key === '+' || ev.key === '=') { changeFont(2); }
+    else if (ev.key === '-') { changeFont(-2); }
+    else if (ev.key === 'd' || ev.key === 'D') { document.getElementById('theme').click(); }
+  });
+
+  applyFont();
+  applyTheme();
+  var start = '';
+  try { start = decodeURIComponent((location.hash || '').substring(1)); } catch (e) { }
+  show(findDoc(start) ? start : (docs[0] && docs[0].path));
+})();
+</script>
+</body>
+</html>
