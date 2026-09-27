@@ -5,6 +5,8 @@ import com.training.demo.model.OrderStatus;
 
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * EXERCISE 3 (medium) - Collectors: groupingBy, toMap, joining.
@@ -22,7 +24,8 @@ public class Ex03_Collectors {
      * Hint: groupingBy accepts a second argument that says what to do with each group.
      */
     public static Map<OrderStatus, Long> countByStatus(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+        return orders.stream()
+                .collect(Collectors.groupingBy(Order::status,Collectors.counting()));
     }
 
     /**
@@ -34,7 +37,8 @@ public class Ex03_Collectors {
      * Hint: if you use toMap, remember what Demo05 showed about duplicate keys.
      */
     public static Map<String, Double> spendByCustomer(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+       return orders.stream()
+                .collect(Collectors.toMap(Order::customerEmail, Order::total, Double::sum, TreeMap::new));
     }
 
     /**
@@ -47,6 +51,10 @@ public class Ex03_Collectors {
      * Hint: anna has two orders but must appear only once.
      */
     public static String premiumNewsletterLine(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+      return   orders.stream()
+                .filter(Order::premium)
+                .map(Order::customerEmail)
+                .distinct()
+                .collect(Collectors.joining("; "));
     }
 }

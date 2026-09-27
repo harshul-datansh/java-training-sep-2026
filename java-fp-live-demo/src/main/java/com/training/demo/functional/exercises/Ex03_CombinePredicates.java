@@ -29,7 +29,7 @@ public class Ex03_CombinePredicates {
      * Hint: Predicate has a default method named after the word in capitals above.
      */
     public static Predicate<Order> paidAndBig() {
-        throw new UnsupportedOperationException("TODO");
+        return  IS_BIG.and(IS_PAID);
     }
 
     /**
@@ -40,7 +40,7 @@ public class Ex03_CombinePredicates {
      * Hint: "not premium" is IS_PREMIUM turned upside down.
      */
     public static Predicate<Order> needsReview() {
-        throw new UnsupportedOperationException("TODO");
+        return IS_BIG.and(IS_PREMIUM.negate());
     }
 
     /**
@@ -51,7 +51,7 @@ public class Ex03_CombinePredicates {
      * Hint: same idea as paidAndBig, different word.
      */
     public static Predicate<Order> premiumOrBig() {
-        throw new UnsupportedOperationException("TODO");
+       return IS_PREMIUM.or(IS_BIG);
     }
 
     /**
@@ -63,6 +63,6 @@ public class Ex03_CombinePredicates {
      * when you say "not cancelled" out loud.
      */
     public static Predicate<Order> stillOpen() {
-        throw new UnsupportedOperationException("TODO");
+        return IS_CANCELLED.negate().and(IS_SHIPPED.negate());
     }
 }

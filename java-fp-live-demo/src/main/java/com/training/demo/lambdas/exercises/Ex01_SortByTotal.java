@@ -2,7 +2,9 @@ package com.training.demo.lambdas.exercises;
 
 import com.training.demo.model.Order;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * EXERCISE 1 (easy) - your first lambda.
@@ -22,6 +24,11 @@ public class Ex01_SortByTotal {
      * Look at how Demo01 sorted cheapest-first, then think about what to swap.
      */
     public static Comparator<Order> byTotalDescending() {
-        throw new UnsupportedOperationException("TODO");
+
+        return Comparator.comparingDouble(Order::total).reversed();
+
+
+
+        };
     }
-}
+
