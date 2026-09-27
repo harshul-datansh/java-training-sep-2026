@@ -2,6 +2,7 @@ package com.training.demo.lambdas.exercises;
 
 import com.training.demo.model.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -29,6 +30,11 @@ public class Ex04_DelayedLabels {
      * Demo04 shows the way out.
      */
     public static List<Supplier<String>> labelJobs(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+       List<Supplier<String>> jobs =new ArrayList<>();
+       for (int i =0;i<orders.size();i++){
+          int   index = i+1;
+           jobs.add(()->index+"/"+orders.size()+" "+orders.get(index-1).id());
+       }
+       return jobs;
     }
 }

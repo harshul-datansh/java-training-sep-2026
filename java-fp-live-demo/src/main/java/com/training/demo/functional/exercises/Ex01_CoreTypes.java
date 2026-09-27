@@ -24,7 +24,8 @@ public class Ex01_CoreTypes {
      * Hint: Predicate means "Order in, boolean out". Which field of Order is a boolean?
      */
     public static Predicate<Order> isPremium() {
-        throw new UnsupportedOperationException("TODO");
+       return Order::premium;
+
     }
 
     /**
@@ -35,7 +36,7 @@ public class Ex01_CoreTypes {
      * Hint: "Order in, Integer out". Lists know their own size.
      */
     public static Function<Order, Integer> itemCount() {
-        throw new UnsupportedOperationException("TODO");
+        return order -> order.skus().size();
     }
 
     /**
@@ -46,7 +47,7 @@ public class Ex01_CoreTypes {
      * Hint: two parameters need parentheses around them.
      */
     public static BiPredicate<Order, String> containsSku() {
-        throw new UnsupportedOperationException("TODO");
+        return (order,skus)->order.skus().contains(skus);
     }
 
     /**
@@ -58,6 +59,6 @@ public class Ex01_CoreTypes {
      * Hint: "two Orders in, one Order out". A ternary (condition ? x : y) keeps it to one line.
      */
     public static BinaryOperator<Order> biggerOrder() {
-        throw new UnsupportedOperationException("TODO");
+        return ((order, order2) -> order.total()>=order2.total()? order:order2 );
     }
 }

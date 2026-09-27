@@ -22,7 +22,7 @@ public class Ex02_CaptureThreshold {
      * Hint: the lambda can read minimum because nobody changes it (Demo03).
      */
     public static Predicate<Order> totalAtLeast(double minimum) {
-        throw new UnsupportedOperationException("TODO");
+        return order -> order.total()>=minimum;
     }
 
     /**
@@ -34,6 +34,6 @@ public class Ex02_CaptureThreshold {
      * Hint: String has a method for comparing text while ignoring case.
      */
     public static Predicate<Order> fromCustomer(String email) {
-        throw new UnsupportedOperationException("TODO");
+        return order -> order.customerEmail().equalsIgnoreCase(email);
     }
 }

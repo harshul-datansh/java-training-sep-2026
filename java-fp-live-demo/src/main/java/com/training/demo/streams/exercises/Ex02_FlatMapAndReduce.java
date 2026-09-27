@@ -1,8 +1,10 @@
 package com.training.demo.streams.exercises;
 
 import com.training.demo.model.Order;
+import com.training.demo.model.OrderStatus;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * EXERCISE 2 (medium) - flatMap, distinct, sorted, reduce.
@@ -21,7 +23,11 @@ public class Ex02_FlatMapAndReduce {
      * you want one flat stream of SKUs instead.
      */
     public static List<String> distinctSkusSorted(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+        return orders.stream()
+                .flatMap(order -> order.skus().stream())
+                .sorted()
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     /**
@@ -34,6 +40,21 @@ public class Ex02_FlatMapAndReduce {
      * Which starting value makes an empty list come out right?
      */
     public static double revenue(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+    /*    List<Order> list=  orders.stream()
+                .filter(Order-> !OrderStatus.CANCELLED.equals(Order.status()))
+                .toList();
+        Double sum = 0.0;
+        for (Order order : list){
+            sum+=order.total();
+        }
+        return sum;
+
+     */
+        return orders.stream()
+                .filter(Order -> !OrderStatus.CANCELLED.equals(Order.status()))
+                .map(Order::total)
+                .reduce(0.0,Double::sum);
+
+
     }
 }

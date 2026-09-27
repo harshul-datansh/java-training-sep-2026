@@ -3,6 +3,7 @@ package com.training.demo.streams.exercises;
 import com.training.demo.model.Order;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * EXERCISE 1 (easy) - your first pipelines: filter + map + collect.
@@ -20,7 +21,11 @@ public class Ex01_FilterAndMap {
      * Order has a helper method that tells you whether it is paid.
      */
     public static List<String> paidOrderIds(List<Order> orders) {
-        throw new UnsupportedOperationException("TODO");
+        return orders.stream()
+                .filter(Order::isPaid)
+                .map(Order::id)
+                .collect(Collectors.toList());
+
     }
 
     /**
@@ -32,6 +37,11 @@ public class Ex01_FilterAndMap {
      * Hint: you may use map more than once in the same pipeline.
      */
     public static List<String> bigSpenderEmails(List<Order> orders, double minTotal) {
-        throw new UnsupportedOperationException("TODO");
+       return orders.stream()
+               .filter(Order->Order.total()>=minTotal)
+               .map(Order::customerEmail)
+               .map(String::toUpperCase)
+               .collect(Collectors.toList());
+
     }
 }

@@ -20,7 +20,7 @@ public class Ex02_CustomDiscountRules {
      * Hint: the lambda receives an Order and must return a double.
      */
     public static DiscountRule premiumTenPercent() {
-        throw new UnsupportedOperationException("TODO");
+        return order -> order.premium()?order.total()*0.10:0;
     }
 
     /**
@@ -31,7 +31,7 @@ public class Ex02_CustomDiscountRules {
      * Hint: same capture idea as the lambdas exercise 2.
      */
     public static DiscountRule flatOffAbove(double minTotal, double amount) {
-        throw new UnsupportedOperationException("TODO");
+        return order -> order.total()>=minTotal?amount:0;
     }
 
     /**
@@ -42,6 +42,6 @@ public class Ex02_CustomDiscountRules {
      * Hint: do not write a new lambda - DiscountRule has a default method for this.
      */
     public static DiscountRule blackFriday() {
-        throw new UnsupportedOperationException("TODO");
+        return premiumTenPercent().plus(flatOffAbove(500,20));
     }
 }

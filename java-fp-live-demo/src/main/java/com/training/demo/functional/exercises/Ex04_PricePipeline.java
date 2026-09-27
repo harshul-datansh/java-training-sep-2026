@@ -25,7 +25,7 @@ public class Ex04_PricePipeline {
      * Hint: f.andThen(g) runs f first.
      */
     public static Function<Double, Double> couponThenVat() {
-        throw new UnsupportedOperationException("TODO");
+        return APPLY_COUPON.andThen(ADD_VAT);
     }
 
     /**
@@ -36,7 +36,7 @@ public class Ex04_PricePipeline {
      * Hint: with compose, the function passed as the ARGUMENT runs first.
      */
     public static Function<Double, Double> couponThenVatWithCompose() {
-        throw new UnsupportedOperationException("TODO");
+       return ADD_VAT.compose(APPLY_COUPON);
     }
 
     /**
@@ -50,6 +50,6 @@ public class Ex04_PricePipeline {
      * Function has a static method for exactly that.
      */
     public static Function<Double, Double> pricingFor(boolean hasCoupon) {
-        throw new UnsupportedOperationException("TODO");
+        return hasCoupon ?APPLY_COUPON.andThen(ADD_VAT):ADD_VAT;
     }
 }

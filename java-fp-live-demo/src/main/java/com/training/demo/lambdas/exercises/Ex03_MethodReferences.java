@@ -2,6 +2,7 @@ package com.training.demo.lambdas.exercises;
 
 import com.training.demo.model.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -25,7 +26,7 @@ public class Ex03_MethodReferences {
      * Hint: which class in java.lang has a static method that turns a String into an int?
      */
     public static Function<String, Integer> parseQuantity() {
-        throw new UnsupportedOperationException("TODO");
+        return Integer::parseInt;
     }
 
     /**
@@ -36,7 +37,7 @@ public class Ex03_MethodReferences {
      * Hint: the "particular object" is the list you get from order.skus().
      */
     public static Predicate<String> isSkuIn(Order order) {
-        throw new UnsupportedOperationException("TODO");
+        return order.skus()::contains;
     }
 
     /**
@@ -47,7 +48,7 @@ public class Ex03_MethodReferences {
      * Hint: records generate a getter method for every field.
      */
     public static Function<Order, String> idOf() {
-        throw new UnsupportedOperationException("TODO");
+        return Order::id;
     }
 
     /**
@@ -58,6 +59,6 @@ public class Ex03_MethodReferences {
      * Hint: List is an interface - pick a class that implements it.
      */
     public static Supplier<List<String>> newSkuList() {
-        throw new UnsupportedOperationException("TODO");
+        return ArrayList::new;
     }
 }
